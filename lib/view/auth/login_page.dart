@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             const Text(
               'Login',
               style: TextStyle(
@@ -29,14 +29,13 @@ class LoginPage extends StatelessWidget {
             ),
             _buildEmailTextField(),
             _buildPasswordTextField(),
+            const SizedBox(height: 10),
             _buildLoginButton(context),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             _buildRegisterButton(context),
-            Spacer(),
+            const Spacer(),
             _buildSocialAccounts(context),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),
