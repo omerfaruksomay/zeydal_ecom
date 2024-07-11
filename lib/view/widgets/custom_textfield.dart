@@ -1,10 +1,39 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key});
+  const CustomTextField({
+    super.key,
+    required this.controller,
+    required this.label,
+    this.isObscure,
+    this.keyboardType,
+  });
+
+  final TextEditingController controller;
+  final String label;
+  final bool? isObscure;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return TextField(
+      keyboardType: keyboardType,
+      obscureText: isObscure ?? false,
+      controller: controller,
+      decoration: InputDecoration(
+        label: Text(
+          label,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+// color: Color.fromRGBO(46, 99, 110, 1),
+              ),
+        ),
+      ),
+    );
   }
 }
