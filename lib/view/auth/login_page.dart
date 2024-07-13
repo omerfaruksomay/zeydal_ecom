@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/auth/register_page.dart';
 import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
-import '../../view_model/main_layout_view_model.dart';
-import '../main_layout.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -17,32 +14,33 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Spacer(),
-            const Text(
-              'Login',
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-              ),
+            Column(
+              children: [
+                const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                _buildEmailTextField(),
+                _buildPasswordTextField(),
+                const SizedBox(height: 10),
+                _buildLoginButton(context),
+                const SizedBox(height: 10),
+                _buildRegisterButton(context),
+              ],
             ),
-            _buildEmailTextField(),
-            _buildPasswordTextField(),
-            const SizedBox(height: 10),
-            _buildLoginButton(context),
-            const SizedBox(height: 10),
-            _buildRegisterButton(context),
-            const Spacer(),
             _buildSocialAccounts(context),
-            const Spacer(),
           ],
         ),
       ),
     );
   }
 
-  Column _buildSocialAccounts(BuildContext context) {
+  Widget _buildSocialAccounts(BuildContext context) {
     return Column(
       children: [
         const Text(
@@ -73,7 +71,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
@@ -83,7 +81,7 @@ class LoginPage extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  print("Google pressed");
+                  print("Facebook pressed");
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -114,7 +112,7 @@ class LoginPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: CustomTextField(
-        controller: _emailController,
+        controller: _passwordController,
         label: "Password",
       ),
     );
@@ -154,7 +152,7 @@ class LoginPage extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const RegisterPage(),
+              builder: (context) =>  RegisterPage(),
             ));
       },
     );
