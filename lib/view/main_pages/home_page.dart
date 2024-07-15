@@ -9,25 +9,7 @@ class HomePage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 250,
-              child: Stack(
-                children: [
-                  Image.asset('assets/images/Olive.jpg'),
-                  const Positioned(
-                    left: 16,
-                    bottom: 50,
-                    child: Text(
-                      'ZEYDAL OLIVE OIL',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildHeroSection(),
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: _buildProductSlider(context, 'Zeytin Yağı'),
@@ -38,6 +20,28 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildHeroSection() {
+    return Container(
+      height: 250,
+      child: Stack(
+        children: [
+          Image.asset('assets/images/Olive.jpg'),
+          const Positioned(
+            left: 16,
+            bottom: 50,
+            child: Text(
+              'ZEYDAL OLIVE OIL',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }
