@@ -11,15 +11,30 @@ class HomePage extends StatelessWidget {
           children: [
             Container(
               height: 250,
-              color: Colors.red,
+              child: Stack(
+                children: [
+                  Image.asset('assets/images/Olive.jpg'),
+                  const Positioned(
+                    left: 16,
+                    bottom: 50,
+                    child: Text(
+                      'ZEYDAL OLIVE OIL',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: _buildProductSlider(context),
+              padding: const EdgeInsets.only(left: 16),
+              child: _buildProductSlider(context, 'Zeytin Yağı'),
             ),
-            Container(
-              height: 300,
-              color: Colors.green,
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, top: 16),
+              child: _buildProductSlider(context, 'Temizlik'),
             ),
           ],
         ),
@@ -27,7 +42,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProductSlider(BuildContext context) {
+  Widget _buildProductSlider(BuildContext context, String title) {
     return SizedBox(
       height: 310,
       child: Column(
@@ -36,17 +51,17 @@ class HomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sale',
-                    style: TextStyle(
+                    title,
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Super Summer Sale',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
                   ),
