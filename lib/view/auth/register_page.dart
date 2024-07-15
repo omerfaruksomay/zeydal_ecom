@@ -44,7 +44,7 @@ class RegisterPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: CustomTextField(
         controller: _nameController,
-        label: "Name",
+        label: "İsim",
       ),
     );
   }
@@ -64,7 +64,7 @@ class RegisterPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: CustomTextField(
         controller: _passwordController,
-        label: "Password",
+        label: "Şifre",
       ),
     );
   }
@@ -109,7 +109,7 @@ class RegisterPage extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Or Continue With Social Account",
+          "Google veya Facebook ile devam edin",
           style: TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 10),

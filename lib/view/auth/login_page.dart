@@ -63,14 +63,14 @@ class LoginPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: CustomTextField(
         controller: _passwordController,
-        label: "Password",
+        label: "Şifre",
       ),
     );
   }
 
   Widget _buildLoginButton(context) {
     return CustomButton(
-      label: "Login",
+      label: "Giriş Yap",
       labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
       buttonColor: Theme.of(context).colorScheme.primary,
       minWidth: 350,
@@ -92,7 +92,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildRegisterButton(context) {
     return CustomButton(
-      label: "Register",
+      label: "Kayıt Ol",
       labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
       buttonColor: Theme.of(context).colorScheme.primaryContainer,
       minWidth: 350,
@@ -112,7 +112,7 @@ class LoginPage extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Or Continue With Social Account",
+          "Google veya Facebook ile devam edin",
           style: TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 10),
