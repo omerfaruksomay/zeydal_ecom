@@ -17,7 +17,6 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-
       keyboardType: keyboardType,
       obscureText: isObscure ?? false,
       controller: controller,
@@ -30,9 +29,9 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-// color: Color.fromRGBO(46, 99, 110, 1),
-              ),
+          borderSide:  BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
     );
