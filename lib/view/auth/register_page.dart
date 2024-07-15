@@ -18,16 +18,10 @@ class RegisterPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Column(
               children: [
-                const Text(
-                  'Register',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Image.asset('assets/images/logo.png', scale: 10),
                 _buildNameTextField(),
                 _buildEmailTextField(),
                 _buildPasswordTextField(),
@@ -37,7 +31,7 @@ class RegisterPage extends StatelessWidget {
                 _buildLoginButton(context),
               ],
             ),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             _buildSocialAccounts(context),
           ],
         ),
@@ -122,44 +116,32 @@ class RegisterPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  print("Google pressed");
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    'assets/images/google.png',
-                    scale: 2,
-                  ),
+            InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              highlightColor: Theme.of(context).colorScheme.primaryContainer,
+              onTap: () {
+                print("Google pressed");
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'assets/images/google.png',
+                  scale: 2,
                 ),
               ),
             ),
             const SizedBox(width: 15),
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  print("Facebook pressed");
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    'assets/images/facebook.png',
-                    scale: 2,
-                  ),
+            InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              highlightColor: Theme.of(context).colorScheme.primaryContainer,
+              onTap: () {
+                print("Facebook pressed");
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'assets/images/facebook.png',
+                  scale: 2,
                 ),
               ),
             ),

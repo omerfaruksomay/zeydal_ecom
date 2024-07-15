@@ -32,6 +32,7 @@ class MainLayout extends StatelessWidget {
               label: "Profile",
             ),
           ],
+
           currentIndex: viewModel.selectedIndex,
           onTap: viewModel.navbarOnTap,
         ),
