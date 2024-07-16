@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/auth/login_page.dart';
+import 'package:zeydal_ecom/view_model/auth/login_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: ChangeNotifierProvider(
+        create: (context) => LoginViewModel(),
+        child: LoginPage(),
+      ),
     );
   }
 }
