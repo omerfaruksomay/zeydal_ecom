@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeydal_ecom/view/auth/register_page.dart';
 import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
+import 'package:zeydal_ecom/view_model/auth/login_view_model.dart';
 
 import '../../view_model/main_layout_view_model.dart';
 import '../main_layout.dart';
@@ -52,6 +52,7 @@ class LoginPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: CustomTextField(
+        keyboardType: TextInputType.emailAddress,
         controller: _emailController,
         label: "Email",
       ),
@@ -62,6 +63,7 @@ class LoginPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: CustomTextField(
+        isObscure: true,
         controller: _passwordController,
         label: "Şifre",
       ),
@@ -91,6 +93,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildRegisterButton(context) {
+    LoginViewModel viewModel = Provider.of(context, listen: false);
     return CustomButton(
       label: "Kayıt Ol",
       labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -98,13 +101,7 @@ class LoginPage extends StatelessWidget {
       minWidth: 350,
       minHeight: 50,
       fontSize: 20,
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RegisterPage(),
-            ));
-      },
+      onPressed: () => viewModel.register(context),
     );
   }
 
