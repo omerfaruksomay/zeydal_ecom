@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ).animate().fadeIn();
   }
 
   Widget _buildHeroSection() {
