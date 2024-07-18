@@ -113,39 +113,20 @@ class LoginPage extends StatelessWidget {
           style: TextStyle(fontSize: 16),
         ),
         const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              highlightColor: Theme.of(context).colorScheme.primaryContainer,
-              onTap: () {
-                print("Google pressed");
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/images/google.png',
-                  scale: 2,
-                ),
-              ),
+        InkWell(
+          splashColor: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          highlightColor: Theme.of(context).colorScheme.primaryContainer,
+          onTap: () {
+            print("Google pressed");
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              'assets/images/google.png',
+              scale: 2,
             ),
-            const SizedBox(width: 15),
-            InkWell(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              highlightColor: Theme.of(context).colorScheme.primaryContainer,
-              onTap: () {
-                print("Facebook pressed");
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  'assets/images/facebook.png',
-                  scale: 2,
-                ),
-              ),
-            ),
-          ],
+          ),
         )
       ],
     );
