@@ -70,7 +70,6 @@ class ProfilePage extends StatelessWidget {
         CustomGridItem(
           title: 'Ayarlar',
           clickColor: Theme.of(context).colorScheme.primaryContainer,
-          backgroundColor: Colors.grey.shade200,
           icon: Icons.settings_outlined,
           iconSize: 50,
           onTap: () {
@@ -85,7 +84,6 @@ class ProfilePage extends StatelessWidget {
     return CustomGridItem(
       title: 'Kartlarım',
       clickColor: Theme.of(context).colorScheme.primaryContainer,
-      backgroundColor: Colors.grey.shade200,
       icon: Icons.credit_card,
       iconSize: 50,
       onTap: () {
@@ -98,7 +96,6 @@ class ProfilePage extends StatelessWidget {
     return CustomGridItem(
       title: 'Adreslerim',
       clickColor: Theme.of(context).colorScheme.primaryContainer,
-      backgroundColor: Colors.grey.shade200,
       icon: Icons.location_on_outlined,
       iconSize: 50,
       onTap: () {
@@ -111,7 +108,6 @@ class ProfilePage extends StatelessWidget {
     return CustomGridItem(
       title: 'Siparişlerim',
       clickColor: Theme.of(context).colorScheme.primaryContainer,
-      backgroundColor: Colors.grey.shade200,
       icon: Icons.list_alt_rounded,
       iconSize: 50,
       onTap: () {

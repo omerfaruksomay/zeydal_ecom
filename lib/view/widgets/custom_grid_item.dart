@@ -5,14 +5,13 @@ class CustomGridItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.clickColor,
-    required this.backgroundColor,
     this.onTap,
     this.icon,
     this.iconSize,
   });
 
   final void Function()? onTap;
-  final Color backgroundColor;
+
   final String title;
   final IconData? icon;
   final Color clickColor;
@@ -21,7 +20,6 @@ class CustomGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor,
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         splashColor: clickColor,

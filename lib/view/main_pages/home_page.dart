@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildHeroSection() {
-    return Container(
+    return  SizedBox(
       height: 250,
       child: Stack(
         children: [
