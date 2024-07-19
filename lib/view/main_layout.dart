@@ -9,6 +9,13 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MainLayoutViewModel>(
       builder: (context, viewModel, child) => Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Image.asset(
+            'assets/images/logo.png',
+            scale: 20,
+          ),
+        ),
         body: viewModel.pages[viewModel.selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).colorScheme.primary,
@@ -32,7 +39,6 @@ class MainLayout extends StatelessWidget {
               label: "Profile",
             ),
           ],
-
           currentIndex: viewModel.selectedIndex,
           onTap: viewModel.navbarOnTap,
         ),

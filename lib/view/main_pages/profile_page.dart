@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:zeydal_ecom/view/widgets/custom_grid_item.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -8,23 +9,16 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(38.0),
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Benim Profilim',
-              style: TextStyle(
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             const SizedBox(height: 25),
             _buildUserInfoSection(),
             const SizedBox(height: 10),
             const Divider(),
             const SizedBox(height: 10),
-            _buildMenuItem(context),
+            Expanded(child: _buildMenuGrid(context)),
           ],
         ),
       ),
@@ -62,45 +56,67 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.primaryContainer,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
-      child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        highlightColor: Colors.white,
-        splashColor: Colors.white,
-        onTap: () {
-          print('Orders button pressed');
-        },
-        child: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Siparişlerim',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '12 adet siparişiniz bulunmakta',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-              ),
-            ],
-          ),
-        ),
+  Widget _buildMenuGrid(BuildContext context) {
+    return GridView(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
       ),
+      children: [
+        _buildOrdersGridItem(context),
+        _buildAdressesGridItem(context),
+        _buildCardsGridItem(context),
+        CustomGridItem(
+          title: 'Ayarlar',
+          clickColor: Theme.of(context).colorScheme.primaryContainer,
+          backgroundColor: Colors.grey.shade200,
+          icon: Icons.settings_outlined,
+          iconSize: 50,
+          onTap: () {
+            print('settings clicked');
+          },
+        ),
+      ],
+    );
+  }
+
+  CustomGridItem _buildCardsGridItem(BuildContext context) {
+    return CustomGridItem(
+      title: 'Kartlarım',
+      clickColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Colors.grey.shade200,
+      icon: Icons.credit_card,
+      iconSize: 50,
+      onTap: () {
+        print('Cards clicked');
+      },
+    );
+  }
+
+  Widget _buildAdressesGridItem(BuildContext context) {
+    return CustomGridItem(
+      title: 'Adreslerim',
+      clickColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Colors.grey.shade200,
+      icon: Icons.location_on_outlined,
+      iconSize: 50,
+      onTap: () {
+        print('adresses clicked');
+      },
+    );
+  }
+
+  Widget _buildOrdersGridItem(BuildContext context) {
+    return CustomGridItem(
+      title: 'Siparişlerim',
+      clickColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Colors.grey.shade200,
+      icon: Icons.list_alt_rounded,
+      iconSize: 50,
+      onTap: () {
+        print('orders Clicked');
+      },
     );
   }
 }

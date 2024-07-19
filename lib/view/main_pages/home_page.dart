@@ -10,11 +10,13 @@ class HomePage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(height: 10),
             _buildHeroSection(),
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: _buildProductSlider(context, 'Zeytin Yağı'),
             ),
+            const Divider(),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 16),
               child: _buildProductSlider(context, 'Temizlik'),
@@ -103,14 +105,12 @@ class HomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Card(
-          child: SizedBox(
-            height: 150,
-            width: 150,
-            child: Image.asset(
-              'assets/images/product.jpg',
-              fit: BoxFit.fill,
-            ),
+        SizedBox(
+          height: 150,
+          width: 150,
+          child: Image.asset(
+            'assets/images/product.jpg',
+            fit: BoxFit.fill,
           ),
         ),
         Column(
