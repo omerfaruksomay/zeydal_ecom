@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildHeroSection() {
-    return  SizedBox(
+    return SizedBox(
       height: 250,
       child: Stack(
         children: [
@@ -78,10 +78,10 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     print("View All pressed");
                   },
-                  child: Text('View All'))
+                  child: const Text('View All'))
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(

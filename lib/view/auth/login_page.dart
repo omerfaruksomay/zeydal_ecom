@@ -4,9 +4,6 @@ import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/auth/login_view_model.dart';
 
-import '../../view_model/main_layout_view_model.dart';
-import '../main_layout.dart';
-
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
@@ -71,6 +68,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildLoginButton(context) {
+    LoginViewModel viewModel = Provider.of(context, listen: false);
     return CustomButton(
       label: "Giriş Yap",
       labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -78,17 +76,7 @@ class LoginPage extends StatelessWidget {
       minWidth: 350,
       minHeight: 50,
       fontSize: 20,
-      onPressed: () {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChangeNotifierProvider(
-                create: (context) => MainLayoutViewModel(),
-                child: const MainLayout(),
-              ),
-            ),
-            (route) => false);
-      },
+      onPressed: () => viewModel.login(context),
     );
   }
 
