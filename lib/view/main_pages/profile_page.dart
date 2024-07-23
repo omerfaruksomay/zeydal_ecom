@@ -67,16 +67,20 @@ class ProfilePage extends StatelessWidget {
         _buildOrdersGridItem(context),
         _buildAdressesGridItem(context),
         _buildCardsGridItem(context),
-        CustomGridItem(
-          title: 'Ayarlar',
-          clickColor: Theme.of(context).colorScheme.primaryContainer,
-          icon: Icons.settings_outlined,
-          iconSize: 50,
-          onTap: () {
-            print('settings clicked');
-          },
-        ),
+        _buildSettingsGridItem(context),
       ],
+    );
+  }
+
+  CustomGridItem _buildSettingsGridItem(BuildContext context) {
+    return CustomGridItem(
+      title: 'Ayarlar',
+      clickColor: Theme.of(context).colorScheme.primaryContainer,
+      icon: Icons.settings_outlined,
+      iconSize: 50,
+      onTap: () {
+        print('settings clicked');
+      },
     );
   }
 
