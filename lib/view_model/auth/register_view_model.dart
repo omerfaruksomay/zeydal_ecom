@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:zeydal_ecom/view/widgets/custom_snacbar.dart';
 
 class RegisterViewModel with ChangeNotifier {
   final loginUrl = Uri.parse('https://10.0.2.2:3000/api/register');
@@ -74,25 +76,54 @@ class RegisterViewModel with ChangeNotifier {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         print('Kullanıcı oluşturuldu: $responseData');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-                  'Doğrulama maili gönderildi. Mailinizi kontrol ediniz.')),
-        );
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              content: CustomSnackbar(
+                message:
+                    'Hesabınız oluşturuldu. Lütfen $email mailinize gelen doğrulama maili ile hesabınızı doğrulayınız.',
+                contentType: ContentType.success,
+                title: 'Tebrikler',
+              ),
+            ),
+          );
       } else {
         final responseData = json.decode(response.body);
         print('Kayıt işlemi başarısız: $responseData');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-                  'Kayıt işlemi başarısız. Hata: ${responseData['message']}')),
-        );
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              content: CustomSnackbar(
+                message:
+                    'Kayıt işlemi başarısız. Lütfen kontrol edip tekar deneyiniz.',
+                contentType: ContentType.success,
+                title: 'Opps!',
+              ),
+            ),
+          );
       }
     } catch (error) {
       print('Kayıt işlemi sırasında hata oluştu: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Kayıt işlemi sırasında hata oluştu.')),
-      );
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbar(
+              message:
+                  'Kayıt işlemi başarısız. Lütfen kontrol edip tekar deneyiniz.',
+              contentType: ContentType.success,
+              title: 'Opps!',
+            ),
+          ),
+        );
     }
   }
 }
