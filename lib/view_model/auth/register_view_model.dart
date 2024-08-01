@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterViewModel with ChangeNotifier {
+  final loginUrl = Uri.parse('https://10.0.2.2:3000/api/register');
   String? _selectedValueCountry;
   String? _selectedValueCity;
 
@@ -31,7 +35,7 @@ class RegisterViewModel with ChangeNotifier {
     _selectedValueCity = newValue;
   }
 
-  void register(
+  Future<void> registerUser(
     String email,
     String password,
     String name,
@@ -41,15 +45,54 @@ class RegisterViewModel with ChangeNotifier {
     String city,
     String postalCode,
     String address,
-  ) {
-    print('email:$email '
-        'password:$password '
-        'name:$name '
-        'surname:$surname '
-        'telNo:$phone '
-        'country:$country'
-        ' City:$city '
-        'postalCode:$postalCode '
-        'address:$address');
+    BuildContext context,
+  ) async {
+    final registerUrl = loginUrl;
+
+    final Map<String, dynamic> data = {
+      'email': email,
+      'name': name,
+      'surname': surname,
+      'phoneNumber': phone,
+      'password': password,
+      'address': address,
+      'city': city,
+      'country': country,
+      'zipCode': postalCode,
+    };
+
+    try {
+      final response = await http.post(
+        registerUrl,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode(data),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        print('Kullanıcı oluşturuldu: $responseData');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Doğrulama maili gönderildi. Mailinizi kontrol ediniz.')),
+        );
+      } else {
+        final responseData = json.decode(response.body);
+        print('Kayıt işlemi başarısız: $responseData');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Kayıt işlemi başarısız. Hata: ${responseData['message']}')),
+        );
+      }
+    } catch (error) {
+      print('Kayıt işlemi sırasında hata oluştu: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Kayıt işlemi sırasında hata oluştu.')),
+      );
+    }
   }
 }

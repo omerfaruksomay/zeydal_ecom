@@ -210,7 +210,7 @@ class RegisterPage extends StatelessWidget {
       minHeight: 50,
       fontSize: 20,
       onPressed: () {
-        viewModel.register(
+        viewModel.registerUser(
           _emailController.text,
           _passwordController.text,
           _nameController.text,
@@ -220,6 +220,7 @@ class RegisterPage extends StatelessWidget {
           viewModel.selectedValueCity.toString(),
           _zipCodeController.text,
           _addressController.text,
+          context
         );
       },
     );

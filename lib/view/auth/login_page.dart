@@ -76,7 +76,8 @@ class LoginPage extends StatelessWidget {
       minWidth: 350,
       minHeight: 50,
       fontSize: 20,
-      onPressed: () => viewModel.login(context),
+      onPressed: () => viewModel.login(
+          _emailController.text, _passwordController.text, context),
     );
   }
 
@@ -106,7 +107,7 @@ class LoginPage extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           highlightColor: Theme.of(context).colorScheme.primaryContainer,
           onTap: () {
-            print("Google pressed");
+
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
