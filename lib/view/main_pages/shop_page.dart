@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:zeydal_ecom/view/shop_related/all_products_page.dart';
-import 'package:zeydal_ecom/view_model/shop_related/all_products_view_model.dart';
+import 'package:zeydal_ecom/view/shop_related/products_page.dart';
+import 'package:zeydal_ecom/view_model/shop_related/products_view_model.dart';
 
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
@@ -17,7 +18,7 @@ class ShopPage extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider(
                   create: (context) => AllProductsViewModel(),
-                  child: const AllProductPage(),
+                  child: const ProductsPage(),
                 ),
               ),
             );
@@ -40,7 +41,7 @@ class ShopPage extends StatelessWidget {
               _buildCategoryContainer('Temizlik', 'assets/images/product.jpg'),
         ),
       ],
-    );
+    ).animate().fade();
   }
 
   Widget _buildCategoryContainer(String catName, String imagePath) {

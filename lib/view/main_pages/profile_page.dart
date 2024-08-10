@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/widgets/custom_grid_item.dart';
+import 'package:zeydal_ecom/view_model/auth/login_view_model.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -73,13 +75,14 @@ class ProfilePage extends StatelessWidget {
   }
 
   CustomGridItem _buildSettingsGridItem(BuildContext context) {
+    LoginViewModel viewModel = Provider.of(context, listen: false);
     return CustomGridItem(
       title: 'Ayarlar',
       clickColor: Theme.of(context).colorScheme.primaryContainer,
       icon: Icons.settings_outlined,
       iconSize: 50,
       onTap: () {
-        print('settings clicked');
+        viewModel.logout(context);
       },
     );
   }
