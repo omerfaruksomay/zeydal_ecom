@@ -3,45 +3,58 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/shop_related/products_page.dart';
 import 'package:zeydal_ecom/view_model/shop_related/products_view_model.dart';
+import 'package:zeydal_ecom/view_model/shop_related/shop_page_view_model.dart';
 
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        _buildCategoryBanner(),
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ChangeNotifierProvider(
-                  create: (context) => AllProductsViewModel(),
-                  child: const ProductsPage(),
+    return
+      Consumer<ShopPageViewModel>(
+        builder: (context, viewModel, child) {
+          return ListView(
+            children: [
+              _buildCategoryBanner(),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (context) => ProductsViewModel(""),
+                        child: const ProductsPage(category: 'Tüm Ürünler',),
+                      ),
+                    ),
+                  );
+                },
+                child: _buildCategoryContainer(
+                  'Tüm Ürünler',
+                  'assets/images/product.jpg',
                 ),
               ),
-            );
-          },
-          child: _buildCategoryContainer(
-              'Tüm Ürünler', 'assets/images/product.jpg'),
-        ),
-        InkWell(
-          onTap: () {
-            print('Zeytin Yağı');
-          },
-          child: _buildCategoryContainer(
-              'Zeytin Yağı', 'assets/images/product.jpg'),
-        ),
-        InkWell(
-          onTap: () {
-            print('Temizlik');
-          },
-          child:
-              _buildCategoryContainer('Temizlik', 'assets/images/product.jpg'),
-        ),
-      ],
-    ).animate().fade();
+              ...viewModel.categories.map((category) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider(
+                          create: (context) => ProductsViewModel(category.name),
+                          child:  ProductsPage(category: category.name,),
+                        ),
+                      ),
+                    );
+                  },
+                  child: _buildCategoryContainer(
+                    category.name,
+                    'assets/images/product.jpg',
+                  ),
+                );
+              }).toList(),
+            ],
+          ).animate().fade();
+        },
+    );
+
   }
 
   Widget _buildCategoryContainer(String catName, String imagePath) {

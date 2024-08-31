@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/auth/login_page.dart';
 import 'package:zeydal_ecom/view_model/auth/register_view_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:zeydal_ecom/view_model/local_storage/storage.dart';
+import 'package:zeydal_ecom/data/local_storage/storage.dart';
 import '../../view/auth/register_page.dart';
 import '../../view/main_layout.dart';
 import '../../view/widgets/custom_snacbar.dart';

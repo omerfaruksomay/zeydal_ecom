@@ -3,19 +3,21 @@ import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/shop_related/product_details.dart';
 import 'package:zeydal_ecom/view_model/shop_related/products_view_model.dart';
 
-import '../../model/product.dart';
+import 'package:zeydal_ecom/data/model/product.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
+  const ProductsPage({super.key, required this.category});
+
+  final String category;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tüm Ürünler'),
+        title: Text(category),
         centerTitle: true,
       ),
-      body: Consumer<AllProductsViewModel>(
+      body: Consumer<ProductsViewModel>(
         builder: (context, viewModel, child) {
           return GridView.builder(
             itemCount: viewModel.products.length,

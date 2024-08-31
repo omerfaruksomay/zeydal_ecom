@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
                   _buildRegisterButton(context),
                 ],
               ),
-              const SizedBox(height: 100),
+              const SizedBox(height: 50),
               _buildSocialAccounts(context),
             ],
           ),

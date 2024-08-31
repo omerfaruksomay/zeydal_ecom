@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:zeydal_ecom/view/widgets/custom_snacbar.dart';
 
 class RegisterViewModel with ChangeNotifier {
-  final loginUrl = Uri.parse('https://10.0.2.2:3000/api/register');
+  final registerUrl = Uri.parse('https://10.0.2.2:3000/api/register');
   String? _selectedValueCountry;
   String? _selectedValueCity;
 
@@ -49,8 +49,6 @@ class RegisterViewModel with ChangeNotifier {
     String address,
     BuildContext context,
   ) async {
-    final registerUrl = loginUrl;
-
     final Map<String, dynamic> data = {
       'email': email,
       'name': name,
@@ -63,53 +61,18 @@ class RegisterViewModel with ChangeNotifier {
       'zipCode': postalCode,
     };
 
-    try {
-      final response = await http.post(
-        registerUrl,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: json.encode(data),
-      );
+    final response = await http.post(
+      registerUrl,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: json.encode(data),
+    );
 
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        print('Kullanıcı oluşturuldu: $responseData');
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              content: CustomSnackbar(
-                message:
-                    'Hesabınız oluşturuldu. Lütfen $email mailinize gelen doğrulama maili ile hesabınızı doğrulayınız.',
-                contentType: ContentType.success,
-                title: 'Tebrikler',
-              ),
-            ),
-          );
-      } else {
-        final responseData = json.decode(response.body);
-        print('Kayıt işlemi başarısız: $responseData');
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              content: CustomSnackbar(
-                message:
-                    'Kayıt işlemi başarısız. Lütfen kontrol edip tekar deneyiniz.',
-                contentType: ContentType.success,
-                title: 'Opps!',
-              ),
-            ),
-          );
-      }
-    } catch (error) {
-      print('Kayıt işlemi sırasında hata oluştu: $error');
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      print('Kullanıcı oluşturuldu: $responseData');
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
@@ -118,8 +81,24 @@ class RegisterViewModel with ChangeNotifier {
             backgroundColor: Colors.transparent,
             content: CustomSnackbar(
               message:
-                  'Kayıt işlemi başarısız. Lütfen kontrol edip tekar deneyiniz.',
+                  'Hesabınız oluşturuldu. Lütfen $email mailinize gelen doğrulama maili ile hesabınızı doğrulayınız.',
               contentType: ContentType.success,
+              title: 'Tebrikler',
+            ),
+          ),
+        );
+    } else {
+      final responseData = json.decode(response.body);
+      print('Kayıt işlemi başarısız: $responseData');
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbar(
+              message: response.body,
+              contentType: ContentType.failure,
               title: 'Opps!',
             ),
           ),

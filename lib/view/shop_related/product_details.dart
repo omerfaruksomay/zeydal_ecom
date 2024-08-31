@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zeydal_ecom/model/product.dart';
+import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -93,7 +93,9 @@ class ProductDetails extends StatelessWidget {
                             Theme.of(context).colorScheme.primaryContainer,
                         minWidth: 100,
                         minHeight: 40,
-                        onPressed: () {},
+                        onPressed: () {
+                          print("${product.name} ${product.price}");
+                        },
                       ),
                     ],
                   ),
