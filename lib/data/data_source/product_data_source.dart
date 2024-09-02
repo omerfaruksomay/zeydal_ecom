@@ -27,4 +27,27 @@ class ProductDataSource {
       throw Exception('Failed to load products');
     }
   }
+
+
+  Future<List<Product>> fetchRandomProducts({String? category}) async {
+    try {
+      // Mevcut fetchProducts metodunu kullanarak tüm ürünleri al
+      List<Product> allProducts = await fetchProducts(category: category);
+
+      // Rastgele 5 ürün seçmek için
+      if (allProducts.length <= 5) {
+        // Eğer toplam ürün sayısı 5 veya daha az ise tümünü döndür
+        return allProducts;
+      } else {
+        // Eğer 5'ten fazla ürün varsa, rastgele 5 tanesini seç
+        allProducts.shuffle();
+        return allProducts.take(5).toList();
+      }
+    } catch (e) {
+      print('Failed to fetch random products: $e');
+      throw Exception('Failed to fetch random products');
+    }
+  }
+
+
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:zeydal_ecom/view/shop_related/products_page.dart';
-import 'package:zeydal_ecom/view_model/shop_related/products_view_model.dart';
-import 'package:zeydal_ecom/view_model/shop_related/shop_page_view_model.dart';
+import 'package:zeydal_ecom/view/main_pages/shop_page/products_page.dart';
+import 'package:zeydal_ecom/view_model/main_pages/shop_page/products_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/shop_page/shop_page_view_model.dart';
 
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});

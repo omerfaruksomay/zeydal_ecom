@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
 
-import '../../data/repository/product_repository.dart';
+import '../../../data/repository/product_repository.dart';
 
 class ProductsViewModel with ChangeNotifier {
   bool _isLoading = false;

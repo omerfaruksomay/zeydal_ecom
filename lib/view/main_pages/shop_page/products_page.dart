@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeydal_ecom/view/shop_related/product_details.dart';
-import 'package:zeydal_ecom/view_model/shop_related/products_view_model.dart';
+import 'package:zeydal_ecom/view/main_pages/shop_page/product_details.dart';
+import 'package:zeydal_ecom/view_model/main_pages/shop_page/products_view_model.dart';
 
 import 'package:zeydal_ecom/data/model/product.dart';
 

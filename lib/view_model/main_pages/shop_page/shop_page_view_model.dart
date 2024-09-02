@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeydal_ecom/data/repository/category_repository.dart';
 
-import '../../data/model/category.dart';
+import '../../../data/model/category.dart';
+
 
 class ShopPageViewModel with ChangeNotifier {
   final _repo = CategoryRepository();
