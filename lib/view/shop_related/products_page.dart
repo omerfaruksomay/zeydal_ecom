@@ -19,6 +19,16 @@ class ProductsPage extends StatelessWidget {
       ),
       body: Consumer<ProductsViewModel>(
         builder: (context, viewModel, child) {
+          if (viewModel.isLoading) {
+            // Yüklenme durumu aktifse, bir indikatör göster
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          // Yüklenme tamamlandığında, ürünler gösteriliyor
+          if (viewModel.products.isEmpty) {
+            return const Center(child: Text("No products found"));
+          }
+
           return GridView.builder(
             itemCount: viewModel.products.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

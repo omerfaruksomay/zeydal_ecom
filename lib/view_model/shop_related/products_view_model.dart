@@ -1,14 +1,17 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:zeydal_ecom/data/model/product.dart';
 
+import '../../data/repository/product_repository.dart';
+
 class ProductsViewModel with ChangeNotifier {
+  bool _isLoading = false;
   final String? category;
   final List<Product> _products = [];
+  final _repo = ProductRepository();
 
   List<Product> get products => _products;
+
+  bool get isLoading => _isLoading;
 
   ProductsViewModel(this.category) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -17,27 +20,17 @@ class ProductsViewModel with ChangeNotifier {
   }
 
   void _getProducts() async {
-    Uri apiUri;
+    _isLoading = true; // Yüklenme başlıyor
+    notifyListeners();
 
-    if (category != null && category!.isNotEmpty) {
-      apiUri = Uri.parse(
-          'https://10.0.2.2:3000/api/get-products-by-category?category=$category');
-    } else {
-      // Kategori tanımlı değilse, tüm ürünleri getir
-      apiUri = Uri.parse('https://10.0.2.2:3000/api/get-all-products');
-    }
+    // Gecikme ekleyerek yükleme süresini uzatma
+    await Future.delayed(const Duration(seconds: 1));
 
-    http.Response response = await http.get(apiUri);
-    if (response.statusCode == 200) {
-      List<dynamic> apiResponse = jsonDecode(response.body);
-      _products.clear();
-      _products.addAll(apiResponse
-          .map((productJson) => Product.fromJson(productJson))
-          .toList());
-      notifyListeners();
-    } else {
-      // Hata durumunu ele al
-      print(response.body);
-    }
+    final products = await _repo.getProducts(category: category);
+    _products.clear();
+    _products.addAll(products);
+
+    _isLoading = false; // Yüklenme tamamlandı
+    notifyListeners();
   }
 }

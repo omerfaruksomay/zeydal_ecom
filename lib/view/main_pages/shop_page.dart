@@ -10,12 +10,11 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Consumer<ShopPageViewModel>(
+    return Consumer<ShopPageViewModel>(
         builder: (context, viewModel, child) {
           return ListView(
             children: [
-              _buildCategoryBanner(),
+            _buildCategoryBanner(),
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(
