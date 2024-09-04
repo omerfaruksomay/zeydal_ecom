@@ -122,13 +122,10 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                brand,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
-              ),
-              Text(
                 name,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              Text(brand, style: const TextStyle(fontSize: 15),),
               Text(
                 price,
                 style: TextStyle(

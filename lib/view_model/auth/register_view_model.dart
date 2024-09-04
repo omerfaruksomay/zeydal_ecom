@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/view/widgets/custom_snacbar.dart';
 
 class RegisterViewModel with ChangeNotifier {
-  final registerUrl = Uri.parse('https://10.0.2.2:3000/api/register');
+  final registerUrl = Uri.parse(ApiConstants.registerUrl);
   String? _selectedValueCountry;
   String? _selectedValueCity;
 

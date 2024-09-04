@@ -3,4 +3,6 @@ class ApiConstants {
   static const String getAllProducts = '$baseUrl/get-all-products';
   static const String getProductsByCategory = '$baseUrl/get-products-by-category';
   static const String getCategories = '$baseUrl/get-categories';
+  static const String loginUrl = '$baseUrl/login';
+  static const String registerUrl = '$baseUrl/register';
 }
