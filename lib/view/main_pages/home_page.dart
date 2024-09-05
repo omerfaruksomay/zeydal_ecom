@@ -91,8 +91,12 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: viewModel.products.map((product) {
-                    return _buildProductSliderItem(context, product.brand,
-                        product.name, product.price.toString());
+                    return _buildProductSliderItem(
+                        context,
+                        product.brand,
+                        product.name,
+                        product.price.toString(),
+                        product.images[0]);
                   }).toList(),
                 ),
               ),
@@ -103,8 +107,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProductSliderItem(
-      BuildContext context, String name, String brand, String price) {
+  Widget _buildProductSliderItem(BuildContext context, String name,
+      String brand, String price, String image) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: Column(
@@ -113,8 +117,8 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 150,
             width: 150,
-            child: Image.asset(
-              'assets/images/product.jpg',
+            child: Image.network(
+              'https://10.0.2.2:3000/$image',
               fit: BoxFit.fill,
             ),
           ),
@@ -123,9 +127,13 @@ class HomePage extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              Text(brand, style: const TextStyle(fontSize: 15),),
+              Text(
+                brand,
+                style: const TextStyle(fontSize: 15),
+              ),
               Text(
                 price,
                 style: TextStyle(

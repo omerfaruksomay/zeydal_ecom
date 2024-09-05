@@ -5,4 +5,6 @@ class ApiConstants {
   static const String getCategories = '$baseUrl/get-categories';
   static const String loginUrl = '$baseUrl/login';
   static const String registerUrl = '$baseUrl/register';
+  static const String createCart = '$baseUrl/carts';
+  static const String getCart = '$baseUrl/getCart';
 }

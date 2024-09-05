@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
+import 'package:zeydal_ecom/view_model/main_pages/shop_page/product_details_view_model.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({super.key, required this.product});
@@ -21,7 +23,7 @@ class ProductDetails extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    Image.asset('assets/images/product.jpg'),
+                    Image.network('https://10.0.2.2:3000/${product.images[0]}'),
                     Text.rich(
                       TextSpan(
                         children: [
@@ -86,17 +88,7 @@ class ProductDetails extends StatelessWidget {
                             color: Theme.of(context).colorScheme.primary,
                             fontSize: 24),
                       ),
-                      CustomButton(
-                        label: 'Sepete Ekle',
-                        labelColor: Colors.black,
-                        buttonColor:
-                            Theme.of(context).colorScheme.primaryContainer,
-                        minWidth: 100,
-                        minHeight: 40,
-                        onPressed: () {
-                          print("${product.name} ${product.price}");
-                        },
-                      ),
+                      _buildOrderButton(context),
                     ],
                   ),
                 ),
@@ -108,82 +100,105 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildProductSlider(BuildContext context) {
-    return SizedBox(
-      height: 310,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Beğenebilecekleriniz',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _buildProductSliderItem(context),
-                const SizedBox(width: 20),
-                _buildProductSliderItem(context),
-                const SizedBox(width: 20),
-                _buildProductSliderItem(context),
-                const SizedBox(width: 20),
-                _buildProductSliderItem(context),
-              ],
-            ),
-          ),
-        ],
-      ),
+  CustomButton _buildOrderButton(BuildContext context) {
+    ProductDetailsViewModel viewModel = Provider.of(context, listen: false);
+    return CustomButton(
+      label: 'Sepete Ekle',
+      labelColor: Colors.black,
+      buttonColor: Theme.of(context).colorScheme.primaryContainer,
+      minWidth: 100,
+      minHeight: 40,
+      onPressed: () {
+        viewModel.addProductToCart(product.id);
+      },
     );
   }
 
-  Widget _buildProductSliderItem(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 150,
-          width: 150,
-          child: Image.asset(
-            'assets/images/product.jpg',
-            fit: BoxFit.fill,
+  Widget _buildProductSlider(BuildContext context) {
+    return Consumer<ProductDetailsViewModel>(
+      builder: (context, viewModel, child) {
+        return SizedBox(
+          height: 310,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Beğenebilecekleriniz',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        print("View All pressed");
+                      },
+                      child: const Text('View All'))
+                ],
+              ),
+              const SizedBox(height: 10),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: viewModel.products.map((product) {
+                    return _buildProductSliderItem(context, product.name,
+                        product.brand, product.price.toString(),product.images[0]);
+                  }).toList(),
+                ),
+              ),
+            ],
           ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Ayvalık Zeydal Natural Sızma',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+        );
+      },
+    );
+  }
+
+  Widget _buildProductSliderItem(
+      BuildContext context, String name, String brand, String price,image) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 150,
+            width: 150,
+            child: Image.network(
+              'https://10.0.2.2:3000/$image',
+              fit: BoxFit.fill,
             ),
-            const Text(
-              'Zeytin yağı 4lt',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              '₺ 6.000',
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-      ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                brand,
+                style: const TextStyle(fontSize: 15),
+              ),
+              Text(
+                price,
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

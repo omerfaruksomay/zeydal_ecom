@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.lightGreenAccent,
-
+          background: Colors.white,
         ),
         useMaterial3: true,
       ),

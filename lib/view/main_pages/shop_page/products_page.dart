@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/main_pages/shop_page/product_details.dart';
+import 'package:zeydal_ecom/view_model/main_pages/shop_page/product_details_view_model.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/products_view_model.dart';
 
 import 'package:zeydal_ecom/data/model/product.dart';
@@ -55,7 +56,12 @@ class ProductsPage extends StatelessWidget {
         showModalBottomSheet(
           isScrollControlled: true,
           context: context,
-          builder: (context) => ProductDetails(product: product),
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) => ProductDetailsViewModel(),
+            child: ProductDetails(
+              product: product,
+            ),
+          ),
         );
       },
       child: Padding(
@@ -64,7 +70,7 @@ class ProductsPage extends StatelessWidget {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/images/product.jpg'),
+            Image.network('https://10.0.2.2:3000/${product.images[0]}'),
             Text.rich(
               TextSpan(
                 children: [
