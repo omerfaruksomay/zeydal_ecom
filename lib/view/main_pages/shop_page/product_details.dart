@@ -109,7 +109,7 @@ class ProductDetails extends StatelessWidget {
       minWidth: 100,
       minHeight: 40,
       onPressed: () {
-        viewModel.addProductToCart(product.id);
+        viewModel.addProductToCart(product.id,context);
       },
     );
   }

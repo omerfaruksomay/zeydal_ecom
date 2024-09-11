@@ -7,4 +7,5 @@ class ApiConstants {
   static const String registerUrl = '$baseUrl/register';
   static const String createCart = '$baseUrl/carts';
   static const String getCart = '$baseUrl/getCart';
+  static const String deleteProductInCart = '$baseUrl/delete-product-in-cart';
 }

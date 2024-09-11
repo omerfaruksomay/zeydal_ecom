@@ -17,7 +17,11 @@ class BagPage extends StatelessWidget {
         }
 
         if (viewModel.cart!.products.isEmpty) {
-          return const Center(child: Text('Sepetinizde ürün yok.'));
+          return const Center(
+              child: Text(
+            'Sepetinizde ürün yok.',
+            style: TextStyle(fontSize: 24),
+          ));
         }
 
         return Column(
@@ -27,59 +31,7 @@ class BagPage extends StatelessWidget {
                 itemCount: viewModel.cart?.products.length,
                 itemBuilder: (context, index) {
                   Product product = viewModel.cart!.products[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: Image.network(
-                              'https://10.0.2.2:3000/${product.images[0]}',
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        product.name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      Text(product.brand),
-                                      const SizedBox(height: 8),
-                                    ],
-                                  ),
-                                  Text(
-                                    '${product.price} ₺',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                  return _buildCartList(context, viewModel, product);
                 },
               ),
             ),
@@ -95,5 +47,83 @@ class BagPage extends StatelessWidget {
         );
       },
     ).animate().fade();
+  }
+
+  Widget _buildCartList(context, BagPageViewModel viewModel, Product product) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.network(
+                'https://10.0.2.2:3000/${product.images[0]}',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: product.brand,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              TextSpan(
+                                text: " ${product.name}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          "${product.price} ₺",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                    _buildDeleteButton(context, viewModel, product.id),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  IconButton _buildDeleteButton(
+      context, BagPageViewModel viewModel, String productId) {
+    return IconButton(
+      onPressed: () async {
+        String cartId = viewModel.cart!.id;
+        await viewModel.removeProductFromCart(context, cartId, productId);
+      },
+      icon: const Icon(Icons.delete),
+    );
   }
 }
