@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/widgets/custom_grid_item.dart';
-import 'package:zeydal_ecom/view_model/auth/login_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/profile_page_view_model.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -11,43 +11,50 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 25),
-            _buildUserInfoSection(),
-            const SizedBox(height: 10),
-            const Divider(),
-            const SizedBox(height: 10),
-            Expanded(child: _buildMenuGrid(context)),
-          ],
-        ),
-      ),
+          padding: const EdgeInsets.all(18.0),
+          child: Consumer<ProfilePageViewModel>(
+            builder: (context, viewModel, child) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 25),
+                  _buildUserInfoSection(viewModel.userData),
+                  const SizedBox(height: 10),
+                  const Divider(),
+                  const SizedBox(height: 10),
+                  Expanded(child: _buildMenuGrid(context)),
+                ],
+              );
+            },
+          )),
     ).animate().fade();
   }
 
-  Row _buildUserInfoSection() {
+  Row _buildUserInfoSection(userData) {
     return Row(
       children: [
         CircleAvatar(
+          backgroundColor: Color(int.parse("0x60${userData['avatarColor']}")),
           radius: 38,
-          child: Image.asset('assets/images/logo.png'),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('assets/images/logo.png'),
+          ),
         ),
         const SizedBox(width: 20),
-        const Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Username Surname',
-              style: TextStyle(
+              userData['name'] + " " + userData['surname'],
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'usermail@mail.com',
-              style: TextStyle(
+              userData['email'],
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
@@ -75,7 +82,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   CustomGridItem _buildSettingsGridItem(BuildContext context) {
-    LoginViewModel viewModel = Provider.of(context, listen: false);
+    ProfilePageViewModel viewModel = Provider.of(context, listen: false);
     return CustomGridItem(
       title: 'Ayarlar',
       clickColor: Theme.of(context).colorScheme.primaryContainer,

@@ -4,8 +4,8 @@ import 'package:zeydal_ecom/view/main_pages/bag_page.dart';
 import 'package:zeydal_ecom/view/main_pages/home_page.dart';
 import 'package:zeydal_ecom/view/main_pages/profile_page.dart';
 import 'package:zeydal_ecom/view/main_pages/shop_page/shop_page.dart';
-import 'package:zeydal_ecom/view_model/auth/login_view_model.dart';
 import 'package:zeydal_ecom/view_model/main_pages/bag_page_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/profile_page_view_model.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/shop_page_view_model.dart';
 
 import 'main_pages/home_page_view_model.dart';
@@ -29,7 +29,7 @@ class MainLayoutViewModel with ChangeNotifier {
       child: const BagPage(),
     ),
     ChangeNotifierProvider(
-      create: (context) => LoginViewModel(),
+      create: (context) => ProfilePageViewModel(),
       child: const ProfilePage(),
     ),
   ];

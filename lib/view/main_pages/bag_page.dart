@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
+import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/main_pages/bag_page_view_model.dart';
 
 class BagPage extends StatelessWidget {
@@ -37,10 +38,29 @@ class BagPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Toplam Fiyat: ${viewModel.getTotalPrice()} ${viewModel.cart!.currency}',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Toplam Tutar:",
+                          style: TextStyle(fontSize: 20,color: Colors.grey),
+                        ),
+                        Text(
+                          '${viewModel.getTotalPrice()} ${viewModel.cart!.currency}',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  CustomButton(label: "Sepeti Onayla", labelColor: Colors.white, buttonColor: Theme.of(context).colorScheme.primary, minWidth: 350, minHeight: 50,onPressed: () {
+
+                  },)
+                ],
               ),
             ),
           ],

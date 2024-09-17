@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/repository/auth_repository.dart';
-import 'package:zeydal_ecom/view/auth/login_page.dart';
 import 'package:zeydal_ecom/view_model/auth/register_view_model.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
 import '../../view/auth/register_page.dart';
@@ -20,10 +21,15 @@ class LoginViewModel with ChangeNotifier {
     try {
       final responseData = await _repo.login(email, password);
       _token = responseData['token'] ?? '';
+      final userData = responseData['user'];
       notifyListeners();
 
       // Token'ı saklama işlemleri burada yapılabilir
       await _storage.writeSecureData('user_token', _token);
+      await _storage.writeSecureData('user_data', jsonEncode(userData));
+
+
+
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -75,30 +81,5 @@ class LoginViewModel with ChangeNotifier {
     );
   }
 
-  void logout(context) async {
-    await _storage.deleteSecureData('user_token');
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          content: CustomSnackbar(
-            message: 'Çıkış işlemi başarılı.',
-            contentType: ContentType.success,
-            title: 'Güle Güle!',
-          ),
-        ),
-      );
 
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider(
-                create: (context) => LoginViewModel(),
-                child: LoginPage(),
-              )),
-      (route) => false,
-    );
-  }
 }
