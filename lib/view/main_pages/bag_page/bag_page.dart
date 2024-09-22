@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
-import 'package:zeydal_ecom/view_model/main_pages/bag_page_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/bag_page/bag_page_view_model.dart';
 
 class BagPage extends StatelessWidget {
   const BagPage({super.key});
@@ -47,7 +47,7 @@ class BagPage extends StatelessWidget {
                       children: [
                         const Text(
                           "Toplam Tutar:",
-                          style: TextStyle(fontSize: 20,color: Colors.grey),
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
                         ),
                         Text(
                           '${viewModel.getTotalPrice()} ${viewModel.cart!.currency}',
@@ -57,9 +57,17 @@ class BagPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  CustomButton(label: "Sepeti Onayla", labelColor: Colors.white, buttonColor: Theme.of(context).colorScheme.primary, minWidth: 350, minHeight: 50,onPressed: () {
-
-                  },)
+                  CustomButton(
+                    label: "Sepeti Onayla",
+                    labelColor: Colors.white,
+                    buttonColor: Theme.of(context).colorScheme.primary,
+                    minWidth: 350,
+                    minHeight: 50,
+                    onPressed: () {
+                      viewModel.goCheckoutPage(
+                          context, viewModel.cart!, viewModel.getTotalPrice());
+                    },
+                  )
                 ],
               ),
             ),

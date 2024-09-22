@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
+import 'package:zeydal_ecom/view/main_pages/bag_page/checkout_page.dart';
+import 'package:zeydal_ecom/view_model/main_pages/bag_page/checkout_page_view_model.dart';
 
-import '../../data/model/cart.dart';
-import '../../view/widgets/custom_snacbar.dart';
+import '../../../data/model/cart.dart';
+import '../../../view/widgets/custom_snacbar.dart';
 
 class BagPageViewModel with ChangeNotifier {
   final _storage = Storage();
@@ -37,6 +40,7 @@ class BagPageViewModel with ChangeNotifier {
         // Başarılı bir yanıt aldığımızda sepet verilerini güncelle
         final responseData = json.decode(response.body);
         _cart = Cart.fromJson(responseData);
+        print(_cart!.id);
         notifyListeners(); // UI'ı güncellemek için
         print('Sepet getirildi: $_cart');
       } else {
@@ -61,7 +65,8 @@ class BagPageViewModel with ChangeNotifier {
     return total;
   }
 
-  Future<void> removeProductFromCart(context,String cartId, String productId) async {
+  Future<void> removeProductFromCart(
+      context, String cartId, String productId) async {
     final url = Uri.parse('${ApiConstants.deleteProductInCart}/$cartId');
     final String token = await _storage.readSecureData('user_token');
 
@@ -104,5 +109,18 @@ class BagPageViewModel with ChangeNotifier {
     }
   }
 
-
+  void goCheckoutPage(BuildContext context, Cart cart,double totalAmount) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) => CheckoutPageViewModel(),
+          child: CheckoutPage(
+            cart: cart,
+            totalAmount: totalAmount,
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -15,6 +15,13 @@ class LoginViewModel with ChangeNotifier {
   String _token = '';
   final _storage = Storage();
   final _repo = AuthRepository();
+  bool _isLoggedIn = false;
+
+  bool get isLoggedIn => _isLoggedIn;
+
+  LoginViewModel() {
+    checkLoginStatus();
+  }
 
   Future<void> login(
       String email, String password, BuildContext context) async {
@@ -27,9 +34,6 @@ class LoginViewModel with ChangeNotifier {
       // Token'ı saklama işlemleri burada yapılabilir
       await _storage.writeSecureData('user_token', _token);
       await _storage.writeSecureData('user_data', jsonEncode(userData));
-
-
-
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -81,5 +85,14 @@ class LoginViewModel with ChangeNotifier {
     );
   }
 
-
+  Future<void> checkLoginStatus() async {
+    Storage _storage = Storage();
+    String token = await _storage.readSecureData('user_token');
+    if (token != 'No data found!') {
+      _isLoggedIn = true;
+    } else {
+      _isLoggedIn = false;
+    }
+    notifyListeners();
+  }
 }

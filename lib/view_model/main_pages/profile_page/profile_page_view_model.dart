@@ -51,6 +51,8 @@ class ProfilePageViewModel with ChangeNotifier {
 
   Future<void> _loadUserData() async {
     final userJson = await _storage.readSecureData('user_data');
+    final token = await _storage.readSecureData('user_token');
+    print(token);
     print(
         "User JSON: $userJson"); // Burada verinin gelip gelmediğini kontrol et
     if (userJson != 'No data found!') {
