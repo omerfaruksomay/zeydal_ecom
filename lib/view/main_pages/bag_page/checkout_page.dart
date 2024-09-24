@@ -14,7 +14,8 @@ class CheckoutPage extends StatelessWidget {
   final Cart cart;
   final double totalAmount;
   final TextEditingController _cartNumController = TextEditingController();
-  final TextEditingController _cartOwnerNameController = TextEditingController();
+  final TextEditingController _cartOwnerNameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class CheckoutPage extends StatelessWidget {
                           const SizedBox(height: 10),
                           _buildCartInfoSection(context),
                           const SizedBox(height: 10),
-                          _buildCardInfo(context)
+                          _buildCardInfo(context),
                         ],
                       ),
                     ),
@@ -49,7 +50,10 @@ class CheckoutPage extends StatelessWidget {
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      child: _buildCheckoutButton(context),
+                      child: Container(
+                        color: Colors.white,
+                        child: _buildCheckoutButton(context),
+                      ),
                     )
                   ],
                 ),
@@ -78,17 +82,12 @@ class CheckoutPage extends StatelessWidget {
           ),
           const Divider(),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              bottom: 16
-            ),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: CustomTextField(
                 controller: _cartOwnerNameController,
                 label: "Kart üzerindek isim",
                 keyboardType: TextInputType.number),
           ),
-
           Padding(
             padding: const EdgeInsets.only(
               left: 16,
@@ -99,7 +98,6 @@ class CheckoutPage extends StatelessWidget {
                 controller: _cartNumController,
                 label: "Kart No",
                 keyboardType: TextInputType.number),
-
           ),
         ],
       ),
@@ -107,6 +105,7 @@ class CheckoutPage extends StatelessWidget {
   }
 
   Widget _buildCheckoutButton(BuildContext context) {
+    CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -138,7 +137,9 @@ class CheckoutPage extends StatelessWidget {
             buttonColor: Theme.of(context).colorScheme.primary,
             minWidth: 225,
             minHeight: 50,
-            onPressed: () {},
+            onPressed: () {
+              viewModel.processPayment(cart.id);
+            },
           ),
         ],
       ),

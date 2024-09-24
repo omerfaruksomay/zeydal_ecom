@@ -32,19 +32,18 @@ class BagPageViewModel with ChangeNotifier {
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token, // Eğer token gerekiyorsa
+          'Authorization': token,
         },
       );
 
       if (response.statusCode == 200) {
-        // Başarılı bir yanıt aldığımızda sepet verilerini güncelle
+
         final responseData = json.decode(response.body);
         _cart = Cart.fromJson(responseData);
         print(_cart!.id);
-        notifyListeners(); // UI'ı güncellemek için
+        notifyListeners();
         print('Sepet getirildi: $_cart');
       } else {
-        // Başarısız yanıt durumları
         final responseData = json.decode(response.body);
         throw Exception(responseData['error'] ?? 'Sepet getirilemedi.');
       }
