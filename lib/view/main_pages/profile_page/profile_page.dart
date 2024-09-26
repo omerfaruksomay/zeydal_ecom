@@ -66,6 +66,7 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildMenuList(BuildContext context, ProfilePageViewModel viewModel) {
+
     return ListView(
       children: [
         ListTile(
@@ -98,7 +99,7 @@ class ProfilePage extends StatelessWidget {
               const Text('Şifre değiştirme, Kullanıcı bilgilerini güncelleme'),
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
-            // Settings page navigation
+            viewModel.goSettings(context);
           },
         ),
         const Divider(),

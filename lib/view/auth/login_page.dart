@@ -29,10 +29,26 @@ class LoginPage extends StatelessWidget {
                   _buildRegisterButton(context),
                 ],
               ),
-              const SizedBox(height: 50),
+              _buildForgotPasswordButton(context),
+              const SizedBox(height: 10),
               _buildSocialAccounts(context),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForgotPasswordButton(BuildContext context) {
+    LoginViewModel viewModel = Provider.of(context, listen: false);
+    return TextButton(
+      onPressed: () {
+        viewModel.goForgotPasswordPage(context);
+      },
+      child: const Text(
+        'Şifremi Unuttum',
+        style: TextStyle(
+          fontSize: 16,
         ),
       ),
     );
@@ -106,9 +122,7 @@ class LoginPage extends StatelessWidget {
           splashColor: Theme.of(context).colorScheme.primaryContainer,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           highlightColor: Theme.of(context).colorScheme.primaryContainer,
-          onTap: () {
-
-          },
+          onTap: () {},
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(

@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<LoginViewModel>(context);
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Zeydal',

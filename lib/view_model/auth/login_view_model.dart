@@ -4,6 +4,8 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/repository/auth_repository.dart';
+import 'package:zeydal_ecom/view/auth/forgot_password_page.dart';
+import 'package:zeydal_ecom/view_model/auth/forgot_password_page_view_model.dart';
 import 'package:zeydal_ecom/view_model/auth/register_view_model.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
 import '../../view/auth/register_page.dart';
@@ -94,5 +96,17 @@ class LoginViewModel with ChangeNotifier {
       _isLoggedIn = false;
     }
     notifyListeners();
+  }
+
+  void goForgotPasswordPage(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) => ForgotPasswordViewModel(),
+          child:  ForgotPasswordPage(),
+        ),
+      ),
+    );
   }
 }
