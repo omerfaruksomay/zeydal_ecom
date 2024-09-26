@@ -13,9 +13,10 @@ class CheckoutPage extends StatelessWidget {
 
   final Cart cart;
   final double totalAmount;
-  final TextEditingController _cartNumController = TextEditingController();
-  final TextEditingController _cartOwnerNameController =
+  final TextEditingController _cardNumController = TextEditingController();
+  final TextEditingController _cardOwnerNameController =
       TextEditingController();
+  final TextEditingController _ccvController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,9 @@ class CheckoutPage extends StatelessWidget {
                           _buildCartInfoSection(context),
                           const SizedBox(height: 10),
                           _buildCardInfo(context),
+                          SizedBox(
+                            height: 100,
+                          )
                         ],
                       ),
                     ),
@@ -84,7 +88,7 @@ class CheckoutPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: CustomTextField(
-                controller: _cartOwnerNameController,
+                controller: _cardOwnerNameController,
                 label: "Kart üzerindek isim",
                 keyboardType: TextInputType.number),
           ),
@@ -95,11 +99,84 @@ class CheckoutPage extends StatelessWidget {
               bottom: 16,
             ),
             child: CustomTextField(
-                controller: _cartNumController,
+                controller: _cardNumController,
                 label: "Kart No",
                 keyboardType: TextInputType.number),
           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            child: Row(
+              children: [
+                Expanded(child: _buildExpireMonthDropDown(context)),
+                Expanded(child: _buildExpireYearDropDown(context)),
+                Expanded(
+                  child: CustomTextField(
+                      controller: _ccvController,
+                      label: "CCV",
+                      keyboardType: TextInputType.number),
+                ),
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildExpireMonthDropDown(BuildContext context) {
+    CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          labelText: 'Ay',
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.primary),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        items: viewModel.months
+            .map<DropdownMenuItem>((String value) => DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                ))
+            .toList(),
+        onChanged: (value) {
+          viewModel.monthDropDownOnChange(value);
+        },
+      ),
+    );
+  }
+
+  Widget _buildExpireYearDropDown(BuildContext context) {
+    CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          labelText: 'Yıl',
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.primary),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+        items: viewModel.years
+            .map<DropdownMenuItem>((String value) => DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                ))
+            .toList(),
+        onChanged: (value) {
+          viewModel.yearDropDownOnChange(value);
+        },
       ),
     );
   }
@@ -138,7 +215,15 @@ class CheckoutPage extends StatelessWidget {
             minWidth: 225,
             minHeight: 50,
             onPressed: () {
-              viewModel.processPayment(cart.id);
+              viewModel.processPayment(
+                cart,
+                cart.id,
+                _cardOwnerNameController.text,
+                _cardNumController.text,
+                viewModel.selectedValueMonth!,
+                viewModel.selectedValueYear!,
+                _ccvController.text,
+              );
             },
           ),
         ],

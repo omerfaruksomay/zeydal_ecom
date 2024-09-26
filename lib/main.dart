@@ -9,10 +9,12 @@ import 'package:zeydal_ecom/view_model/main_layout_view_model.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(ChangeNotifierProvider(
-    create: (context) => LoginViewModel(),
-    child: const MyApp(),
-  ));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LoginViewModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

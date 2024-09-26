@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
+import 'package:zeydal_ecom/data/model/cart.dart';
 
 import '../../../data/local_storage/storage.dart';
 import '../../../data/model/user.dart';
@@ -9,6 +10,53 @@ import '../../../data/model/user.dart';
 class CheckoutPageViewModel with ChangeNotifier {
   final _storage = Storage();
   User? userData;
+  String? _selectedValueMonth;
+  String? _selectedValueYear;
+
+  String? get selectedValueMonth => _selectedValueMonth;
+
+  String? get selectedValueYear => _selectedValueYear;
+
+  final List<String> months = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+  ];
+  final List<String> years = [
+    "2024",
+    "2025",
+    "2026",
+    "2027",
+    "2028",
+    "2029",
+    "2030",
+    "2031",
+    "2032",
+    "2033",
+    "2034",
+    "2035",
+    "2036",
+    "2037",
+    "2038",
+    "2039",
+  ];
+
+  void monthDropDownOnChange(String? newValue) {
+    _selectedValueMonth = newValue;
+  }
+
+  void yearDropDownOnChange(String? newValue) {
+    _selectedValueYear = newValue;
+  }
 
   CheckoutPageViewModel() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -26,17 +74,18 @@ class CheckoutPageViewModel with ChangeNotifier {
     }
   }
 
-  Future<void> processPayment(String cartId) async {
+  Future<void> processPayment(Cart? cart, String cartId, String name, String cardNum,
+      String expireMonth, String expireYear, String ccv) async {
     final url = Uri.parse(
         '${ApiConstants.checkout}/$cartId/with-new-card'); // Replace with your backend URL
     final String token = await _storage.readSecureData('user_token');
 
     Map<String, dynamic> card = {
-      "cardHolderName": "Ahmed Tayyib Kaya",
-      "cardNumber": "5168880000000002",
-      "expireMonth": "12",
-      "expireYear": "2030",
-      "cvc": "123",
+      "cardHolderName": name,
+      "cardNumber": cardNum,
+      "expireMonth": expireMonth,
+      "expireYear": expireYear,
+      "cvc": ccv,
     };
 
     // Create the data payload
@@ -44,23 +93,24 @@ class CheckoutPageViewModel with ChangeNotifier {
       "card": card,
     };
 
-      final response = await http.post(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token, // Add your authorization token if needed
-        },
-        body: jsonEncode(data),
-      );
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token, // Add your authorization token if needed
+      },
+      body: jsonEncode(data),
+    );
 
-      if (response.statusCode == 200) {
-        print('Payment successful');
-        print('Response: ${response.body}');
-
-      } else {
-        print('Failed to process payment');
-        print('Status Code: ${response.statusCode}');
-        print('Response: ${response.body}');
-      }
+    if (response.statusCode == 200) {
+      print('Payment successful');
+      print('Response: ${response.body}');
+      cart = null;
+      notifyListeners();
+    } else {
+      print('Failed to process payment');
+      print('Status Code: ${response.statusCode}');
+      print('Response: ${response.body}');
+    }
   }
 }

@@ -12,7 +12,6 @@ class RegisterViewModel with ChangeNotifier {
   String? _selectedValueCity;
 
   String? get selectedValueCity => _selectedValueCity;
-
   String? get selectedValueCountry => _selectedValueCountry;
 
   final List<String> countries = [
