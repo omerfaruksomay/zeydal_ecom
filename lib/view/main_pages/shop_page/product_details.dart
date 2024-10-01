@@ -23,12 +23,12 @@ class ProductDetails extends StatelessWidget {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    Image.network('https://10.0.2.2:3000/${product.images[0]}'),
+                    Image.asset('assets/images/product.jpg'),
                     Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: product.brand,
+                            text: product.seller['SellerName'],
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -150,7 +150,7 @@ class ProductDetails extends StatelessWidget {
                 child: Row(
                   children: viewModel.products.map((product) {
                     return _buildProductSliderItem(context, product.name,
-                        product.brand, product.price.toString(),product.images[0]);
+                        product.seller['SellerName'], product.price.toString(),product.images[0]);
                   }).toList(),
                 ),
               ),
@@ -171,8 +171,7 @@ class ProductDetails extends StatelessWidget {
           SizedBox(
             height: 150,
             width: 150,
-            child: Image.network(
-              'https://10.0.2.2:3000/$image',
+            child: Image.asset('assets/images/product.jpg',
               fit: BoxFit.fill,
             ),
           ),

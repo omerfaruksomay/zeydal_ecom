@@ -37,7 +37,6 @@ class BagPageViewModel with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-
         final responseData = json.decode(response.body);
         _cart = Cart.fromJson(responseData);
         print(_cart!.id);
@@ -59,15 +58,17 @@ class BagPageViewModel with ChangeNotifier {
     }
     double total = 0.0;
     for (var product in _cart!.products) {
-      total += product.price;
+      total +=
+          product['productId']['price']; // Doğru veri yoluyla fiyat alınıyor
     }
     return total;
   }
 
   Future<void> removeProductFromCart(
-      context, String cartId, String productId) async {
+      BuildContext context, String cartId, String productId) async {
     final url = Uri.parse('${ApiConstants.deleteProductInCart}/$cartId');
     final String token = await _storage.readSecureData('user_token');
+    print(productId);
 
     try {
       final response = await http.post(
@@ -83,7 +84,8 @@ class BagPageViewModel with ChangeNotifier {
 
       if (response.statusCode == 200) {
         // Başarılı bir yanıt aldığımızda ürünü sepetten çıkar ve UI'ı güncelle
-        _cart!.products.removeWhere((product) => product.id == productId);
+        _cart!.products.removeWhere((product) =>
+            product['productId']['_id'] == productId); // Ürün ID'sini kontrol et
         notifyListeners(); // UI'ı güncellemek için
         print('Ürün sepetten çıkarıldı: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -108,7 +110,7 @@ class BagPageViewModel with ChangeNotifier {
     }
   }
 
-  void goCheckoutPage(BuildContext context, Cart cart,double totalAmount) {
+  void goCheckoutPage(BuildContext context, Cart cart, double totalAmount) {
     Navigator.push(
       context,
       MaterialPageRoute(

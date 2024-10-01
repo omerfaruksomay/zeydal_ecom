@@ -70,12 +70,12 @@ class ProductsPage extends StatelessWidget {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network('https://10.0.2.2:3000/${product.images[0]}'),
+            Image.asset('assets/images/product.jpg'),
             Text.rich(
               TextSpan(
                 children: [
                   TextSpan(
-                    text: product.brand,
+                    text: product.seller['SellerName'],
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,

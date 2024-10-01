@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/data/model/user.dart';
 import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
@@ -257,19 +256,19 @@ class CheckoutPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: cart.products.length,
                   itemBuilder: (context, index) {
-                    Product product = cart.products[index];
+                    final product = cart.products[index];
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          product.name,
+                          product['productId']['name'],
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey.shade700,
                           ),
                         ),
                         Text(
-                          "${product.price}₺",
+                          "${product['productId']['price']}₺",
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

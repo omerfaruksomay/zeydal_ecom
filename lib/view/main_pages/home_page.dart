@@ -72,18 +72,14 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
-                        'Super Summer Sale',
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w300),
-                      ),
                     ],
                   ),
                   TextButton(
-                      onPressed: () {
-                        print("View All pressed");
-                      },
-                      child: const Text('View All'))
+                    onPressed: () {
+                      print("View All pressed");
+                    },
+                    child: const Text('View All'),
+                  )
                 ],
               ),
               const SizedBox(height: 10),
@@ -93,7 +89,7 @@ class HomePage extends StatelessWidget {
                   children: viewModel.products.map((product) {
                     return _buildProductSliderItem(
                         context,
-                        product.brand,
+                        product.seller['SellerName'],
                         product.name,
                         product.price.toString(),
                         product.images[0]);
@@ -117,8 +113,8 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 150,
             width: 150,
-            child: Image.network(
-              'https://10.0.2.2:3000/$image',
+            child: Image.asset(
+              'assets/images/product.jpg',
               fit: BoxFit.fill,
             ),
           ),

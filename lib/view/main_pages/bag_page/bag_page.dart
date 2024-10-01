@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/main_pages/bag_page/bag_page_view_model.dart';
 
@@ -20,9 +19,9 @@ class BagPage extends StatelessWidget {
         if (viewModel.cart!.products.isEmpty) {
           return const Center(
               child: Text(
-            'Sepetinizde ürün yok.',
-            style: TextStyle(fontSize: 24),
-          ));
+                'Sepetinizde ürün yok.',
+                style: TextStyle(fontSize: 24),
+              ));
         }
 
         return Column(
@@ -31,7 +30,7 @@ class BagPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: viewModel.cart?.products.length,
                 itemBuilder: (context, index) {
-                  Product product = viewModel.cart!.products[index];
+                  final product = viewModel.cart!.products[index];
                   return _buildCartList(context, viewModel, product);
                 },
               ),
@@ -77,7 +76,8 @@ class BagPage extends StatelessWidget {
     ).animate().fade();
   }
 
-  Widget _buildCartList(context, BagPageViewModel viewModel, Product product) {
+  Widget _buildCartList(
+      context, BagPageViewModel viewModel, Map<String, dynamic> product) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -89,8 +89,8 @@ class BagPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                'https://10.0.2.2:3000/${product.images[0]}',
+              child: Image.asset(
+                'assets/images/product.jpg', // Resmi sunucudan alıyorsan
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
@@ -109,14 +109,14 @@ class BagPage extends StatelessWidget {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: product.brand,
+                                text: product['seller']['SellerName'],
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
                               ),
                               TextSpan(
-                                text: " ${product.name}",
+                                text: " ${product['productId']['name']}",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 16,
@@ -126,14 +126,14 @@ class BagPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "${product.price} ₺",
+                          "${product['productId']['price']} ₺",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         const SizedBox(height: 8),
                       ],
                     ),
-                    _buildDeleteButton(context, viewModel, product.id),
+                    _buildDeleteButton(context, viewModel, product['productId']['_id']),
                   ],
                 ),
               ),
