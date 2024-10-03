@@ -215,7 +215,6 @@ class CheckoutPage extends StatelessWidget {
             minHeight: 50,
             onPressed: () {
               viewModel.processPayment(
-                cart,
                 cart.id,
                 _cardOwnerNameController.text,
                 _cardNumController.text,

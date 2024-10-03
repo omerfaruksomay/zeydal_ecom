@@ -9,8 +9,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ayarlar'),
         centerTitle: true,
+        title: Image.asset(
+          'assets/images/logo.png',
+          scale: 20,
+        ),
       ),
       body: SafeArea(
         child: _buildMenuList(context),

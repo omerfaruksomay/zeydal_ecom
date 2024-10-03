@@ -74,7 +74,7 @@ class CheckoutPageViewModel with ChangeNotifier {
     }
   }
 
-  Future<void> processPayment(Cart? cart, String cartId, String name, String cardNum,
+  Future<void> processPayment(String cartId, String name, String cardNum,
       String expireMonth, String expireYear, String ccv) async {
     final url = Uri.parse(
         '${ApiConstants.checkout}/$cartId/with-new-card'); // Replace with your backend URL
@@ -105,7 +105,6 @@ class CheckoutPageViewModel with ChangeNotifier {
     if (response.statusCode == 200) {
       print('Payment successful');
       print('Response: ${response.body}');
-      cart = null;
       notifyListeners();
     } else {
       print('Failed to process payment');

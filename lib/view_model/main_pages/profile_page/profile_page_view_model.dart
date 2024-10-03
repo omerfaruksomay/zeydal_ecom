@@ -10,8 +10,10 @@ import 'package:zeydal_ecom/view_model/main_pages/profile_page/settings_page_vie
 
 import '../../../data/model/user.dart';
 import '../../../view/auth/login_page.dart';
+import '../../../view/main_pages/profile_page/cards_page.dart';
 import '../../../view/widgets/custom_snacbar.dart';
 import '../../auth/login_view_model.dart';
+import 'cards_page_view_model.dart';
 
 class ProfilePageViewModel with ChangeNotifier {
   final _storage = Storage();
@@ -87,4 +89,16 @@ class ProfilePageViewModel with ChangeNotifier {
       ),
     );
   }
+
+  void goCardsPage(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+            create: (context) => CardsPageViewModel(),
+            child: const CardsPage(),
+          ),
+        ));
+  }
+
 }

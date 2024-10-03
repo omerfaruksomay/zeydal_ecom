@@ -89,7 +89,7 @@ class ProfilePage extends StatelessWidget {
           title: const Text('Kartlarım'),
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
-            // Payment methods page navigation
+            viewModel.goCardsPage(context);
           },
         ),
         const Divider(),

@@ -11,17 +11,30 @@ class ShopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ShopPageViewModel>(
-        builder: (context, viewModel, child) {
-          return ListView(
-            children: [
+      builder: (context, viewModel, child) {
+        return ListView(
+          children: [
             _buildCategoryBanner(),
-              InkWell(
+            Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => ChangeNotifierProvider(
                         create: (context) => ProductsViewModel(""),
-                        child: const ProductsPage(category: 'Tüm Ürünler',),
+                        child: const ProductsPage(
+                          category: 'Tüm Ürünler',
+                        ),
                       ),
                     ),
                   );
@@ -31,14 +44,28 @@ class ShopPage extends StatelessWidget {
                   'assets/images/product.jpg',
                 ),
               ),
-              ...viewModel.categories.map((category) {
-                return InkWell(
+            ),
+            ...viewModel.categories.map((category) {
+              return Container(
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      spreadRadius: 1,
+                      blurRadius: 6,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: InkWell(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ChangeNotifierProvider(
                           create: (context) => ProductsViewModel(category.name),
-                          child:  ProductsPage(category: category.name,),
+                          child: ProductsPage(
+                            category: category.name,
+                          ),
                         ),
                       ),
                     );
@@ -47,13 +74,13 @@ class ShopPage extends StatelessWidget {
                     category.name,
                     'assets/images/product.jpg',
                   ),
-                );
-              }).toList(),
-            ],
-          ).animate().fade();
-        },
+                ),
+              );
+            }).toList(),
+          ],
+        ).animate().fade();
+      },
     );
-
   }
 
   Widget _buildCategoryContainer(String catName, String imagePath) {
@@ -89,7 +116,17 @@ class ShopPage extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.red),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.red,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              spreadRadius: 1,
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
         width: 300,
         height: 120,
         child: const Column(
