@@ -49,55 +49,76 @@ class ProductsPage extends StatelessWidget {
   }
 
   Widget _buildGridTile(Product product, BuildContext context) {
-    return InkWell(
-      highlightColor: Theme.of(context).colorScheme.secondaryContainer,
-      splashColor: Theme.of(context).colorScheme.secondaryContainer,
-      onTap: () {
-        showModalBottomSheet(
-          isScrollControlled: true,
-          context: context,
-          builder: (context) => ChangeNotifierProvider(
-            create: (context) => ProductDetailsViewModel(),
-            child: ProductDetails(
-              product: product,
-            ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridTile(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset('assets/images/product.jpg'),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: product.seller['SellerName'],
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ' ${product.name}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              '${product.price.toString()} ₺',
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary, fontSize: 20),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              spreadRadius: 1,
+              blurRadius: 6,
+              offset: Offset(0, 2),
             ),
           ],
-        )),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.black12,
+            width: 2,
+          ),
+        ),
+        child: InkWell(
+          highlightColor: Theme.of(context).colorScheme.secondaryContainer,
+          splashColor: Theme.of(context).colorScheme.secondaryContainer,
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => ChangeNotifierProvider(
+                create: (context) => ProductDetailsViewModel(),
+                child: ProductDetails(
+                  product: product,
+                ),
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridTile(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset('assets/images/product.jpg'),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: product.seller['SellerName'],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' ${product.name}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${product.price.toString()} ₺',
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary, fontSize: 20),
+                ),
+              ],
+            )),
+          ),
+        ),
       ),
     );
   }
