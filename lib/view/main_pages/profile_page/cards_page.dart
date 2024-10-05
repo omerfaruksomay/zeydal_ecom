@@ -9,12 +9,7 @@ class CardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_card),
-        onPressed: () {
-          print('pressed');
-        },
-      ),
+      floatingActionButton: _buildCreateCardButton(context),
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
@@ -24,6 +19,26 @@ class CardsPage extends StatelessWidget {
       ),
       body: Consumer<CardsPageViewModel>(
         builder: (context, viewModel, child) {
+          if (viewModel.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (viewModel.cards.isEmpty) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Kayıtlı kartınız bulunmuyor. Lütfen kart ekleyiniz.',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
+
+
           return ListView.builder(
             itemCount: viewModel.cards.length,
             itemBuilder: (context, index) {
@@ -63,7 +78,8 @@ class CardsPage extends StatelessWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => print('delete'),
+                              onPressed: () => viewModel.deleteCard(
+                                  context, cards.cardToken),
                               child: const Text(
                                 'Kartı Sil',
                                 style: TextStyle(
@@ -81,8 +97,9 @@ class CardsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(
-                              'assets/images/master.png',
-                              scale: 14,
+                              viewModel.getCardImage(cards.cardAssociation),
+                              width: 100,
+                              height: 100,
                             ),
                             const SizedBox(
                               width: 16,
@@ -102,6 +119,16 @@ class CardsPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildCreateCardButton(BuildContext context) {
+    CardsPageViewModel viewModel = Provider.of(context, listen: false);
+    return FloatingActionButton(
+      child: const Icon(Icons.add_card),
+      onPressed: () {
+        viewModel.goCreateCardPage(context);
+      },
     );
   }
 }

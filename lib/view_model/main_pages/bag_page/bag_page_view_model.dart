@@ -83,9 +83,7 @@ class BagPageViewModel with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        // Başarılı bir yanıt aldığımızda ürünü sepetten çıkar ve UI'ı güncelle
-        _cart!.products.removeWhere((product) =>
-            product['productId']['_id'] == productId); // Ürün ID'sini kontrol et
+        _fetchCart();
         notifyListeners(); // UI'ı güncellemek için
         print('Ürün sepetten çıkarıldı: $productId');
         ScaffoldMessenger.of(context).showSnackBar(
