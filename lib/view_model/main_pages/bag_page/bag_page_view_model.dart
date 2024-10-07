@@ -58,8 +58,7 @@ class BagPageViewModel with ChangeNotifier {
     }
     double total = 0.0;
     for (var product in _cart!.products) {
-      total +=
-          product['productId']['price']; // Doğru veri yoluyla fiyat alınıyor
+      total += product['productId']['price'] * product['quantity'];
     }
     return total;
   }
@@ -104,6 +103,64 @@ class BagPageViewModel with ChangeNotifier {
       }
     } catch (error) {
       print('Ürün çıkarma hatası: $error');
+      throw error; // Hata mesajını üst katmanlara ilet
+    }
+  }
+
+  Future<void> addProductToCart(String productId, context) async {
+    final url = Uri.parse(ApiConstants.createCart);
+    final String token = await _storage.readSecureData('user_token');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token, // Eğer token gerekiyorsa
+        },
+        body: json.encode({
+          'productId': productId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Başarılı bir yanıt aldığımızda yapılacak işlemler
+        final responseData = json.decode(response.body);
+        print(responseData);
+        _fetchCart();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbar(
+              message: 'Ürün adedi arttırıldı.',
+              contentType: ContentType.success,
+              title: 'Harika!',
+            ),
+          ),
+        );
+
+        // Sepet verilerini güncelle veya kullanıcıyı bilgilendir
+      } else {
+        // Başarısız yanıt durumları
+        final responseData = json.decode(response.body);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbar(
+              message: 'Bir hata oluştu.',
+              contentType: ContentType.failure,
+              title: 'Opps!',
+            ),
+          ),
+        );
+
+        throw Exception(responseData['error'] ?? 'Sepet oluşturulamadı.');
+      }
+    } catch (error) {
+      print('Sepete ürün ekleme hatası: $error');
       throw error; // Hata mesajını üst katmanlara ilet
     }
   }

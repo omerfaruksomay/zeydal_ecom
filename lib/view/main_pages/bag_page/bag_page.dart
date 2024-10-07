@@ -19,9 +19,9 @@ class BagPage extends StatelessWidget {
         if (viewModel.cart!.products.isEmpty) {
           return const Center(
               child: Text(
-                'Sepetinizde ürün yok.',
-                style: TextStyle(fontSize: 24),
-              ));
+            'Sepetinizde ürün yok.',
+            style: TextStyle(fontSize: 24),
+          ));
         }
 
         return Column(
@@ -49,7 +49,7 @@ class BagPage extends StatelessWidget {
                           style: TextStyle(fontSize: 20, color: Colors.grey),
                         ),
                         Text(
-                          '${viewModel.getTotalPrice()} ${viewModel.cart!.currency}',
+                          '${viewModel.getTotalPrice().toStringAsFixed(2)} ${viewModel.cart!.currency}',
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -109,31 +109,44 @@ class BagPage extends StatelessWidget {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: product['seller']['SellerName'],
+                                text: product['productId']['name'],
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
                               ),
-                              TextSpan(
-                                text: " ${product['productId']['name']}",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16,
-                                ),
-                              ),
                             ],
                           ),
                         ),
-                        Text(
-                          "${product['productId']['price']} ₺",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                viewModel.removeProductFromCart(
+                                    context,
+                                    viewModel.cart!.id,
+                                    product['productId']['_id']);
+                              },
+                              icon: const Icon(Icons.remove_circle_outline),
+                            ),
+                            Text(
+                              product['quantity'].toString(),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                viewModel.addProductToCart(product['productId']['_id'], context);
+                              },
+                              icon: const Icon(Icons.add_circle_outline),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                    _buildDeleteButton(context, viewModel, product['productId']['_id']),
+                    Text(
+                      "${product['productId']['price'] * product['quantity']} ₺",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
                   ],
                 ),
               ),
@@ -141,17 +154,6 @@ class BagPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  IconButton _buildDeleteButton(
-      context, BagPageViewModel viewModel, String productId) {
-    return IconButton(
-      onPressed: () async {
-        String cartId = viewModel.cart!.id;
-        await viewModel.removeProductFromCart(context, cartId, productId);
-      },
-      icon: const Icon(Icons.delete),
     );
   }
 }

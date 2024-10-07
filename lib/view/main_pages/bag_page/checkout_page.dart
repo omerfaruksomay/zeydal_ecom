@@ -198,7 +198,7 @@ class CheckoutPage extends StatelessWidget {
                       color: Colors.grey),
                 ),
                 TextSpan(
-                  text: " $totalAmount₺",
+                  text: " ${totalAmount.toStringAsFixed(2)}₺",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -260,14 +260,14 @@ class CheckoutPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          product['productId']['name'],
+                          '${product['quantity']} x ${product['productId']['name']}',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey.shade700,
                           ),
                         ),
                         Text(
-                          "${product['productId']['price']}₺",
+                          "${product['productId']['price'] * product['quantity']}₺",
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -289,7 +289,7 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "$totalAmount₺",
+                      "${totalAmount.toStringAsFixed(2)}₺",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
