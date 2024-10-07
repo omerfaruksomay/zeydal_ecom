@@ -177,6 +177,9 @@ class BagPageViewModel with ChangeNotifier {
           ),
         ),
       ),
-    );
+    ).then((value) {
+      _cart = null;
+      _fetchCart();
+    });
   }
 }

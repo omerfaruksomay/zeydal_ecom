@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/model/bank_card.dart';
 import 'package:zeydal_ecom/data/model/user.dart';
 import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
@@ -43,7 +44,7 @@ class CheckoutPage extends StatelessWidget {
                           _buildCartInfoSection(context),
                           const SizedBox(height: 10),
                           _buildCardInfo(context),
-                          SizedBox(
+                          const SizedBox(
                             height: 100,
                           )
                         ],
@@ -67,6 +68,7 @@ class CheckoutPage extends StatelessWidget {
   }
 
   Widget _buildCardInfo(BuildContext context) {
+    CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -85,97 +87,35 @@ class CheckoutPage extends StatelessWidget {
           ),
           const Divider(),
           Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            child: CustomTextField(
-                controller: _cardOwnerNameController,
-                label: "Kart üzerindek isim",
-                keyboardType: TextInputType.number),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              bottom: 16,
-            ),
-            child: CustomTextField(
-                controller: _cardNumController,
-                label: "Kart No",
-                keyboardType: TextInputType.number),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-            child: Row(
-              children: [
-                Expanded(child: _buildExpireMonthDropDown(context)),
-                Expanded(child: _buildExpireYearDropDown(context)),
-                Expanded(
-                  child: CustomTextField(
-                      controller: _ccvController,
-                      label: "CCV",
-                      keyboardType: TextInputType.number),
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              width: double.infinity,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<BankCard>(
+                  items: viewModel.cards
+                      .map<DropdownMenuItem<BankCard>>((BankCard card) {
+                    return DropdownMenuItem<BankCard>(
+                      value: card,
+                      child: Text(
+                          '${card.cardAlias} kartım - ${card.lastFourDigits} ile biten'), // Son 4 hane gösterilir
+                    );
+                  }).toList(),
+                  onChanged: (BankCard? newValue) {
+                    viewModel.selectCard(newValue); // Kart seçimi değiştiğinde
+                  },
+                  value: viewModel.selectedCard,
+                  hint: Text('Bir kart seçiniz'),
                 ),
-              ],
+              ),
             ),
-          ),
+          )
         ],
-      ),
-    );
-  }
-
-  Widget _buildExpireMonthDropDown(BuildContext context) {
-    CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: DropdownButtonFormField(
-        decoration: InputDecoration(
-          labelText: 'Ay',
-          focusedBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.primary),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        items: viewModel.months
-            .map<DropdownMenuItem>((String value) => DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                ))
-            .toList(),
-        onChanged: (value) {
-          viewModel.monthDropDownOnChange(value);
-        },
-      ),
-    );
-  }
-
-  Widget _buildExpireYearDropDown(BuildContext context) {
-    CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: DropdownButtonFormField(
-        decoration: InputDecoration(
-          labelText: 'Yıl',
-          focusedBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.primary),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
-        items: viewModel.years
-            .map<DropdownMenuItem>((String value) => DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                ))
-            .toList(),
-        onChanged: (value) {
-          viewModel.yearDropDownOnChange(value);
-        },
       ),
     );
   }
@@ -214,14 +154,17 @@ class CheckoutPage extends StatelessWidget {
             minWidth: 225,
             minHeight: 50,
             onPressed: () {
-              viewModel.processPayment(
+              viewModel.processPaymentWithRegisteredCard(
+                  context, cart.id, viewModel.selectedIndex!);
+
+              /*viewModel.processPayment(
                 cart.id,
                 _cardOwnerNameController.text,
                 _cardNumController.text,
                 viewModel.selectedValueMonth!,
                 viewModel.selectedValueYear!,
                 _ccvController.text,
-              );
+              );*/
             },
           ),
         ],

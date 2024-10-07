@@ -134,7 +134,8 @@ class BagPage extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                viewModel.addProductToCart(product['productId']['_id'], context);
+                                viewModel.addProductToCart(
+                                    product['productId']['_id'], context);
                               },
                               icon: const Icon(Icons.add_circle_outline),
                             ),
