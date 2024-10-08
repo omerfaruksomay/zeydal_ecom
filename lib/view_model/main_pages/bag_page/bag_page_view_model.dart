@@ -14,6 +14,9 @@ import '../../../view/widgets/custom_snacbar.dart';
 
 class BagPageViewModel with ChangeNotifier {
   final _storage = Storage();
+  bool _isLoading = true;
+
+  bool get isLoading => _isLoading;
 
   Cart? _cart; // Sepet verilerini tutmak için Cart modelini kullanıyoruz
   Cart? get cart => _cart;
@@ -49,6 +52,10 @@ class BagPageViewModel with ChangeNotifier {
     } catch (error) {
       print('Sepet getirme hatası: $error');
       throw error; // Hata mesajını üst katmanlara ilet
+    } finally {
+      await Future.delayed(const Duration(seconds: 2));
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -179,7 +186,7 @@ class BagPageViewModel with ChangeNotifier {
       ),
     ).then((value) {
       _cart = null;
-      _fetchCart();
+      notifyListeners();
     });
   }
 }

@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
-import 'package:zeydal_ecom/data/model/cart.dart';
 
 import '../../../data/local_storage/storage.dart';
 import '../../../data/model/bank_card.dart';
 import '../../../data/model/user.dart';
+import '../../../view/widgets/custom_snacbar.dart';
 
 class CheckoutPageViewModel with ChangeNotifier {
   final _storage = Storage();
@@ -92,6 +93,17 @@ class CheckoutPageViewModel with ChangeNotifier {
         // Başarılı ödeme durumunda yapılacaklar
         print('Payment successful');
         print('Response: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbar(
+              message: 'Ödeme başarılı bir şekilde alındı.',
+              contentType: ContentType.success,
+              title: 'Tebrikler!',
+            ),
+          ),
+        );
         Navigator.pop(context);
         notifyListeners();
       } else {
@@ -99,6 +111,17 @@ class CheckoutPageViewModel with ChangeNotifier {
         print('Failed to process payment');
         print('Status Code: ${response.statusCode}');
         print('Response: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            content: CustomSnackbar(
+              message: 'Oops!',
+              contentType: ContentType.failure,
+              title: 'Ödeme yapılırken bir hata oluştu.',
+            ),
+          ),
+        );
       }
     } catch (error) {
       // Hata durumunda mesaj
@@ -106,43 +129,4 @@ class CheckoutPageViewModel with ChangeNotifier {
       throw Exception('Failed to process payment');
     }
   }
-
-/* Future<void> processPayment(String cartId, String name, String cardNum,
-      String expireMonth, String expireYear, String ccv) async {
-    final url = Uri.parse(
-        '${ApiConstants.checkout}/$cartId/with-new-card'); // Replace with your backend URL
-    final String token = await _storage.readSecureData('user_token');
-
-    Map<String, dynamic> card = {
-      "cardHolderName": name,
-      "cardNumber": cardNum,
-      "expireMonth": expireMonth,
-      "expireYear": expireYear,
-      "cvc": ccv,
-    };
-
-    // Create the data payload
-    Map<String, dynamic> data = {
-      "card": card,
-    };
-
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token, // Add your authorization token if needed
-      },
-      body: jsonEncode(data),
-    );
-
-    if (response.statusCode == 200) {
-      print('Payment successful');
-      print('Response: ${response.body}');
-      notifyListeners();
-    } else {
-      print('Failed to process payment');
-      print('Status Code: ${response.statusCode}');
-      print('Response: ${response.body}');
-    }
-  }*/
 }

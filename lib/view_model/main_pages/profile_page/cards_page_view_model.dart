@@ -47,10 +47,10 @@ class CardsPageViewModel with ChangeNotifier {
       } else {
         throw Exception('Failed to load cards');
       }
-      await Future.delayed(const Duration(seconds: 2));
     } catch (error) {
       throw Exception('Error fetching cards: $error');
     } finally {
+      await Future.delayed(const Duration(seconds: 2));
       _isLoading = false;
       notifyListeners();
     }

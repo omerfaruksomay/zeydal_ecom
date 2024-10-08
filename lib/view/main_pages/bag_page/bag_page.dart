@@ -12,11 +12,14 @@ class BagPage extends StatelessWidget {
     return Consumer<BagPageViewModel>(
       builder: (context, viewModel, child) {
         // Cart ve products null olup olmadığını kontrol edin
-        if (viewModel.cart == null) {
-          return const Center(child: CircularProgressIndicator());
+
+        if (viewModel.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
-        if (viewModel.cart!.products.isEmpty) {
+        if (viewModel.cart == null) {
           return const Center(
               child: Text(
             'Sepetinizde ürün yok.',
@@ -64,7 +67,10 @@ class BagPage extends StatelessWidget {
                     minHeight: 50,
                     onPressed: () {
                       viewModel.goCheckoutPage(
-                          context, viewModel.cart!, viewModel.getTotalPrice());
+                        context,
+                        viewModel.cart!,
+                        viewModel.getTotalPrice(),
+                      );
                     },
                   )
                 ],
