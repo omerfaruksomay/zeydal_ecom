@@ -69,11 +69,22 @@ class CheckoutPage extends StatelessWidget {
 
   Widget _buildCardInfo(BuildContext context) {
     CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).colorScheme.secondaryContainer,
+    return Container(decoration: BoxDecoration(
+      color: Colors.white,
+      boxShadow: const [
+        BoxShadow(
+          color: Colors.black12,
+          spreadRadius: 1,
+          blurRadius: 6,
+          offset: Offset(0, 2),
+        ),
+      ],
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(
+        color: Colors.black12,
+        width: 2,
       ),
+    ),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,10 +184,22 @@ class CheckoutPage extends StatelessWidget {
   }
 
   Widget _buildCartInfoSection(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.secondaryContainer),
+    return Container(decoration: BoxDecoration(
+      color: Colors.white,
+      boxShadow: const [
+        BoxShadow(
+          color: Colors.black12,
+          spreadRadius: 1,
+          blurRadius: 6,
+          offset: Offset(0, 2),
+        ),
+      ],
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(
+        color: Colors.black12,
+        width: 2,
+      ),
+    ),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,8 +274,20 @@ class CheckoutPage extends StatelessWidget {
   Widget _buildAdressSection(BuildContext context, User user) {
     return Container(
       decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            spreadRadius: 1,
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
         borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).colorScheme.secondaryContainer,
+        border: Border.all(
+          color: Colors.black12,
+          width: 2,
+        ),
       ),
       width: double.infinity,
       child: Column(

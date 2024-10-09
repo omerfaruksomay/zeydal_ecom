@@ -105,41 +105,43 @@ class HomePage extends StatelessWidget {
 
   Widget _buildProductSliderItem(BuildContext context, String name,
       String brand, String price, String image) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 150,
-            width: 150,
-            child: Image.asset(
-              'assets/images/product.jpg',
-              fit: BoxFit.fill,
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 150,
+              width: 150,
+              child: Image.asset(
+                'assets/images/product.jpg',
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                brand,
-                style: const TextStyle(fontSize: 15),
-              ),
-              Text(
-                price,
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style:
+                      const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  brand,
+                  style: const TextStyle(fontSize: 15),
+                ),
+                Text(
+                  price,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

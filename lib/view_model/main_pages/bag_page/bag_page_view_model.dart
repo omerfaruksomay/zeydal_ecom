@@ -42,7 +42,6 @@ class BagPageViewModel with ChangeNotifier {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         _cart = Cart.fromJson(responseData);
-        print(_cart!.id);
         notifyListeners();
         print('Sepet getirildi: $_cart');
       } else {

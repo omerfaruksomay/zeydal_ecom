@@ -66,14 +66,13 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildMenuList(BuildContext context, ProfilePageViewModel viewModel) {
-
     return ListView(
       children: [
         ListTile(
           title: const Text('Siparişlerim'),
           trailing: const Icon(Icons.chevron_right),
           onTap: () {
-            // Orders page navigation
+            viewModel.goMyOrdersPage(context);
           },
         ),
         const Divider(),

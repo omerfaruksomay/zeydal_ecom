@@ -13,4 +13,5 @@ class ApiConstants {
   static const String checkout = '$baseUrl/payments';
   static const String getAndCreateCards = '$baseUrl/cards';
   static const String deleteCard = '$baseUrl/cards/delete-by-token';
+  static const String getUserOrders = '$baseUrl/user/orders';
 }
