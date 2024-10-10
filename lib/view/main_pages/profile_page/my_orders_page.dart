@@ -9,13 +9,7 @@ class MyOrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Image.asset(
-          'assets/images/logo.png',
-          scale: 20,
-        ),
-      ),
+      appBar: AppBar(centerTitle: true, title: Text('Sipaişlerim')),
       body: Consumer<MyOrdersPageViewModel>(
         builder: (context, viewModel, child) {
           return ListView.builder(
@@ -47,54 +41,66 @@ class MyOrdersPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              cart.formattedCreatedAt,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            Text.rich(
-                              TextSpan(
-                                children: [
-                                  const TextSpan(
-                                      text: 'Toplam: ',
-                                      style: TextStyle(fontSize: 16)),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  cart.formattedCreatedAt,
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                                Text.rich(
                                   TextSpan(
-                                    text:
-                                        '${viewModel.getTotalPrice(cart).toStringAsFixed(2)} ₺',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        fontSize: 16),
+                                    children: [
+                                      const TextSpan(
+                                          text: 'Toplam: ',
+                                          style: TextStyle(fontSize: 16)),
+                                      TextSpan(
+                                        text:
+                                            '${viewModel.getTotalPrice(cart).toStringAsFixed(2)} ₺',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
+                            TextButton(
+                                onPressed: () {
+                                  viewModel.goOrderDetails(
+                                    context,
+                                    cart,
+                                    viewModel.getTotalPrice(cart),
+                                  );
+                                },
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      'Detaylar',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 16,
+                                    )
+                                  ],
+                                ))
                           ],
                         ),
                         const Divider(),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              for (var product in cart.products)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          height: 75,
-                                          width: 75,
-                                          child: Image.asset(
-                                              'assets/images/product.jpg')),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
+                          child: _buildProductImages(cart),
                         ),
+                        const SizedBox(height: 10),
+                        Text("${cart.products.length} ürün teslim edildi."),
                       ],
                     ),
                   ),
@@ -104,6 +110,25 @@ class MyOrdersPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildProductImages(Cart cart) {
+    return Row(
+      children: [
+        for (var product in cart.products)
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Column(
+              children: [
+                Container(
+                    height: 75,
+                    width: 75,
+                    child: Image.asset('assets/images/product.jpg')),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }

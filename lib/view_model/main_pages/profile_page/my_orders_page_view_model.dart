@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:zeydal_ecom/view/main_pages/profile_page/order_details_page.dart';
 import 'dart:convert';
 
 import '../../../data/api_constants/api_constants.dart';
@@ -52,5 +53,17 @@ class MyOrdersPageViewModel with ChangeNotifier {
       total += product['productId']['price'] * product['quantity'];
     }
     return total;
+  }
+
+  void goOrderDetails(BuildContext context, Cart cart, double totalPrice) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OrderDetailsPage(
+          cart: cart,
+          totalPrice: totalPrice,
+        ),
+      ),
+    );
   }
 }
