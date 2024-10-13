@@ -122,9 +122,10 @@ class MyOrdersPage extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                    height: 75,
-                    width: 75,
-                    child: Image.asset('assets/images/product.jpg')),
+                  height: 75,
+                  width: 75,
+                  child: Image.asset('assets/images/product.jpg'),
+                ),
               ],
             ),
           ),

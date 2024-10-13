@@ -102,6 +102,7 @@ class BagPageViewModel with ChangeNotifier {
             ),
           ),
         );
+
       } else {
         // Başarısız yanıt durumları
         final responseData = json.decode(response.body);
@@ -185,6 +186,7 @@ class BagPageViewModel with ChangeNotifier {
       ),
     ).then((value) {
       _cart = null;
+      _fetchCart();
       notifyListeners();
     });
   }

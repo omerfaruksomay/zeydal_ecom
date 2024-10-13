@@ -14,6 +14,13 @@ class CheckoutPageViewModel with ChangeNotifier {
   List<BankCard> _cards = [];
   BankCard? _selectedCard; // Seçilen kartı tutmak için değişken
   int? _selectedIndex;
+  bool _useSavedCards = true; // Başlangıçta kayıtlı kartlar gösterilecek
+
+  bool get useSavedCards => _useSavedCards;
+
+  // Butonun label'ını döndüren metot
+  String get buttonLabel =>
+      _useSavedCards ? "Başka kartla öde" : "Kayıtlı kartlarım";
 
   int? get selectedIndex => _selectedIndex;
 
@@ -28,6 +35,12 @@ class CheckoutPageViewModel with ChangeNotifier {
       _loadUserData();
       _fetchCards();
     });
+  }
+
+  // Durumu tersine çeviren metot
+  void togglePaymentMethod() {
+    _useSavedCards = !_useSavedCards;
+    notifyListeners();
   }
 
   // Kartları getiren fonksiyon
@@ -127,6 +140,64 @@ class CheckoutPageViewModel with ChangeNotifier {
       // Hata durumunda mesaj
       print('Error processing payment: $error');
       throw Exception('Failed to process payment');
+    }
+  }
+
+  Future<void> processPayment(BuildContext context, String cartId, String name,
+      String cardNum, String expireMonth, String expireYear, String ccv) async {
+    final url = Uri.parse(
+        '${ApiConstants.checkout}/$cartId/with-new-card'); // Replace with your backend URL
+    final String token = await _storage.readSecureData('user_token');
+    Map<String, dynamic> card = {
+      "cardHolderName": name,
+      "cardNumber": cardNum,
+      "expireMonth": expireMonth,
+      "expireYear": expireYear,
+      "cvc": ccv,
+    };
+    // Create the data payload
+    Map<String, dynamic> data = {
+      "card": card,
+    };
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token, // Add your authorization token if needed
+      },
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      print('Payment successful');
+      print('Response: ${response.body}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          content: CustomSnackbar(
+            message: 'Ödeme başarılı bir şekilde alındı.',
+            contentType: ContentType.success,
+            title: 'Tebrikler!',
+          ),
+        ),
+      );
+      Navigator.pop(context);
+      notifyListeners();
+    } else {
+      print('Failed to process payment');
+      print('Status Code: ${response.statusCode}');
+      print('Response: ${response.body}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          content: CustomSnackbar(
+            message: 'Oops!',
+            contentType: ContentType.failure,
+            title: 'Ödeme yapılırken bir hata oluştu.',
+          ),
+        ),
+      );
     }
   }
 }

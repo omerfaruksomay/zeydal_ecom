@@ -121,6 +121,7 @@ class CardsPageViewModel with ChangeNotifier {
       ),
     ).then((value) {
       _cards.clear();
+      _isLoading = true;
       _fetchCards();
     });
   }

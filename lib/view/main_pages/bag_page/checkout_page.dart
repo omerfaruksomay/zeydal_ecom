@@ -17,6 +17,8 @@ class CheckoutPage extends StatelessWidget {
   final TextEditingController _cardOwnerNameController =
       TextEditingController();
   final TextEditingController _ccvController = TextEditingController();
+  final TextEditingController _expireMonthController = TextEditingController();
+  final TextEditingController _expireYearController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,64 +71,130 @@ class CheckoutPage extends StatelessWidget {
 
   Widget _buildCardInfo(BuildContext context) {
     CheckoutPageViewModel viewModel = Provider.of(context, listen: false);
-    return Container(decoration: BoxDecoration(
-      color: Colors.white,
-      boxShadow: const [
-        BoxShadow(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            spreadRadius: 1,
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
           color: Colors.black12,
-          spreadRadius: 1,
-          blurRadius: 6,
-          offset: Offset(0, 2),
+          width: 2,
         ),
-      ],
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(
-        color: Colors.black12,
-        width: 2,
       ),
-    ),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 8, right: 8, top: 8),
-            child: Text(
-              'Kart bilgileri',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              width: double.infinity,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.grey, width: 1),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<BankCard>(
-                  items: viewModel.cards
-                      .map<DropdownMenuItem<BankCard>>((BankCard card) {
-                    return DropdownMenuItem<BankCard>(
-                      value: card,
-                      child: Text(
-                          '${card.cardAlias} kartım - ${card.lastFourDigits} ile biten'), // Son 4 hane gösterilir
-                    );
-                  }).toList(),
-                  onChanged: (BankCard? newValue) {
-                    viewModel.selectCard(newValue); // Kart seçimi değiştiğinde
-                  },
-                  value: viewModel.selectedCard,
-                  hint: Text('Bir kart seçiniz'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+                child: Text(
+                  'Kart bilgileri',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-            ),
-          )
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                child: TextButton(
+                  onPressed: () => viewModel.togglePaymentMethod(),
+                  child: Text(
+                    viewModel.buttonLabel,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              )
+            ],
+          ),
+          const Divider(),
+          viewModel.useSavedCards
+              ? _buildRegisteredCards(viewModel)
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                              controller: _cardOwnerNameController,
+                              label: 'Kart Üzerindeki İsim'),
+                          const SizedBox(height: 16),
+                          CustomTextField(
+                              controller: _cardNumController, label: 'Kart No'),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: _expireMonthController,
+                                  label: 'Ay',
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: _expireYearController,
+                                  label: 'Yıl',
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: _ccvController,
+                                  label: 'ccv',
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildRegisteredCards(CheckoutPageViewModel viewModel) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey, width: 1),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<BankCard>(
+            items: viewModel.cards
+                .map<DropdownMenuItem<BankCard>>((BankCard card) {
+              return DropdownMenuItem<BankCard>(
+                value: card,
+                child: Text(
+                    '${card.cardAlias} kartım - ${card.lastFourDigits} ile biten'), // Son 4 hane gösterilir
+              );
+            }).toList(),
+            onChanged: (BankCard? newValue) {
+              viewModel.selectCard(newValue); // Kart seçimi değiştiğinde
+            },
+            value: viewModel.selectedCard,
+            hint: Text('Bir kart seçiniz'),
+          ),
+        ),
       ),
     );
   }
@@ -165,17 +233,20 @@ class CheckoutPage extends StatelessWidget {
             minWidth: 225,
             minHeight: 50,
             onPressed: () {
-              viewModel.processPaymentWithRegisteredCard(
-                  context, cart.id, viewModel.selectedIndex!);
-
-              /*viewModel.processPayment(
-                cart.id,
-                _cardOwnerNameController.text,
-                _cardNumController.text,
-                viewModel.selectedValueMonth!,
-                viewModel.selectedValueYear!,
-                _ccvController.text,
-              );*/
+              if (viewModel.useSavedCards) {
+                viewModel.processPaymentWithRegisteredCard(
+                    context, cart.id, viewModel.selectedIndex!);
+              } else {
+                viewModel.processPayment(
+                  context,
+                  cart.id,
+                  _cardOwnerNameController.text,
+                  _cardNumController.text,
+                  _expireMonthController.text,
+                  _expireYearController.text,
+                  _ccvController.text,
+                );
+              }
             },
           ),
         ],
@@ -184,22 +255,23 @@ class CheckoutPage extends StatelessWidget {
   }
 
   Widget _buildCartInfoSection(BuildContext context) {
-    return Container(decoration: BoxDecoration(
-      color: Colors.white,
-      boxShadow: const [
-        BoxShadow(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            spreadRadius: 1,
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
           color: Colors.black12,
-          spreadRadius: 1,
-          blurRadius: 6,
-          offset: Offset(0, 2),
+          width: 2,
         ),
-      ],
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(
-        color: Colors.black12,
-        width: 2,
       ),
-    ),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
