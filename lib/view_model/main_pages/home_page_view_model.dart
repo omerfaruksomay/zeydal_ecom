@@ -19,6 +19,7 @@ class HomePageViewModel with ChangeNotifier {
     final products = await _repo.getRandomProducts("");
     _products.clear();
     _products.addAll(products);
+    print(_products);
     notifyListeners();
   }
 }

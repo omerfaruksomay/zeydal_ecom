@@ -31,7 +31,6 @@ class LoginPage extends StatelessWidget {
               ),
               _buildForgotPasswordButton(context),
               const SizedBox(height: 10),
-              _buildSocialAccounts(context),
             ],
           ),
         ),
@@ -57,7 +56,7 @@ class LoginPage extends StatelessWidget {
   Widget _buildImage() {
     return Image.asset(
       'assets/images/logo.png',
-      scale: 10,
+      scale: 3,
     );
   }
 
@@ -110,7 +109,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialAccounts(BuildContext context) {
+/* Widget _buildSocialAccounts(BuildContext context) {
     return Column(
       children: [
         const Text(
@@ -133,5 +132,5 @@ class LoginPage extends StatelessWidget {
         )
       ],
     );
-  }
+  }*/
 }

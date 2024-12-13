@@ -52,6 +52,7 @@ class CardsPageViewModel with ChangeNotifier {
     } finally {
       await Future.delayed(const Duration(seconds: 2));
       _isLoading = false;
+      print(_cards.length);
       notifyListeners();
     }
   }

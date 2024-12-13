@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
+import 'package:zeydal_ecom/view/main_pages/bag_page/checkout_done.dart';
+import 'package:zeydal_ecom/view_model/main_pages/bag_page/checkout_done_view_model.dart';
 
 import '../../../data/local_storage/storage.dart';
 import '../../../data/model/bank_card.dart';
@@ -117,7 +120,15 @@ class CheckoutPageViewModel with ChangeNotifier {
             ),
           ),
         );
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChangeNotifierProvider(
+                create: (context) => CheckoutDoneViewModel(),
+                child: const CheckoutDonePage(),
+              )),
+              (route) => false,
+        );
         notifyListeners();
       } else {
         // Hata durumu

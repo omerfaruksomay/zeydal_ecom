@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
             left: 16,
             bottom: 50,
             child: Text(
-              'ZEYDAL OLIVE OIL',
+              'Dijital Hal',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 35,
@@ -87,12 +87,8 @@ class HomePage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: viewModel.products.map((product) {
-                    return _buildProductSliderItem(
-                        context,
-                        product.seller['SellerName'],
-                        product.name,
-                        product.price.toString(),
-                        product.images[0]);
+                    return _buildProductSliderItem(context, product.name,
+                        product.price.toString(), product.images[0]);
                   }).toList(),
                 ),
               ),
@@ -103,8 +99,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProductSliderItem(BuildContext context, String name,
-      String brand, String price, String image) {
+  Widget _buildProductSliderItem(
+      BuildContext context, String brand, String price, String image) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0),
@@ -123,9 +119,9 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
-                  style:
-                      const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  'Zeydal',
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   brand,

@@ -26,7 +26,7 @@ class RegisterPage extends StatelessWidget {
           children: [
             Column(
               children: [
-                Image.asset('assets/images/logo.png', scale: 15),
+                Image.asset('assets/images/logo.png', scale: 2),
                 _buildEmailTextField(),
                 _buildPasswordTextField(),
                 Row(
