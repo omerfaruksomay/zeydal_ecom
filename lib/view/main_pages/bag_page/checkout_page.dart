@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/model/bank_card.dart';
 import 'package:zeydal_ecom/data/model/user.dart';
+import 'package:zeydal_ecom/view/widgets/custom_app_bar.dart';
 import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/main_pages/bag_page/checkout_page_view_model.dart';
@@ -23,13 +24,7 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Image.asset(
-            'assets/images/logo.png',
-            scale: 5,
-          ),
-        ),
+        appBar: CustomAppbar(),
         body: Consumer<CheckoutPageViewModel>(
           builder: (context, viewModel, child) {
             return Padding(

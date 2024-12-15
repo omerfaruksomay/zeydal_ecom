@@ -60,7 +60,7 @@ class RegisterPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            _buildSocialAccounts(context),
+            //_buildSocialAccounts(context),
           ],
         ),
       ),
@@ -240,7 +240,7 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialAccounts(BuildContext context) {
+/*  Widget _buildSocialAccounts(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(
@@ -272,5 +272,5 @@ class RegisterPage extends StatelessWidget {
         ],
       ),
     );
-  }
+  }*/
 }

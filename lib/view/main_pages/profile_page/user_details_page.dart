@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeydal_ecom/data/model/user.dart';
+import 'package:zeydal_ecom/view/widgets/custom_app_bar.dart';
 
 class UserDetailsPage extends StatelessWidget {
   const UserDetailsPage({super.key, required this.userData});
@@ -9,13 +10,7 @@ class UserDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Image.asset(
-          'assets/images/logo.png',
-          scale: 5,
-        ),
-      ),
+      appBar: CustomAppbar(),
       body: SafeArea(
         child: Column(
           children: [

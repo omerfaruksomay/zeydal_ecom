@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/view/widgets/custom_app_bar.dart';
 import 'package:zeydal_ecom/view_model/main_layout_view_model.dart';
 
 class MainLayout extends StatelessWidget {
@@ -9,13 +10,7 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MainLayoutViewModel>(
       builder: (context, viewModel, child) => Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Image.asset(
-            'assets/images/logo.png',
-            scale: 5,
-          ),
-        ),
+        appBar: CustomAppbar(),
         body: viewModel.pages[viewModel.selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).colorScheme.primary,

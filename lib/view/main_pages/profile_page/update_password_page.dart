@@ -43,7 +43,7 @@ class UpdatePasswordPage extends StatelessWidget {
   Widget _buildImage() {
     return Image.asset(
       'assets/images/logo.png',
-      scale: 10,
+      scale: 2,
     );
   }
 

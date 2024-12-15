@@ -14,7 +14,7 @@ class CardsPage extends StatelessWidget {
         centerTitle: true,
         title: Image.asset(
           'assets/images/logo.png',
-          scale: 20,
+          scale: 5,
         ),
       ),
       body: Consumer<CardsPageViewModel>(

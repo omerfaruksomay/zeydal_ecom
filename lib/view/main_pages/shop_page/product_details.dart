@@ -188,7 +188,7 @@ class ProductDetails extends StatelessWidget {
                 style: const TextStyle(fontSize: 15),
               ),
               Text(
-                price,
+                "$price ₺",
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 20,
