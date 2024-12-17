@@ -86,7 +86,7 @@ class LoginPage extends StatelessWidget {
     LoginViewModel viewModel = Provider.of(context, listen: false);
     return CustomButton(
       label: "Giriş Yap",
-      labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      labelColor: Colors.white,
       buttonColor: Theme.of(context).colorScheme.primary,
       minWidth: 350,
       minHeight: 50,

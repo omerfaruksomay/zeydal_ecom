@@ -52,9 +52,9 @@ class RegisterPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildRegisterButton(context),
-                    SizedBox(width: 30),
                     _buildLoginButton(context),
+                    SizedBox(width: 30),
+                    _buildRegisterButton(context),
                   ],
                 ),
               ],
@@ -204,24 +204,23 @@ class RegisterPage extends StatelessWidget {
     RegisterViewModel viewModel = Provider.of(context, listen: false);
     return CustomButton(
       label: "Kayıt Ol",
-      labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      labelColor: Colors.white,
       buttonColor: Theme.of(context).colorScheme.primary,
       minWidth: 50,
       minHeight: 50,
       fontSize: 20,
       onPressed: () {
         viewModel.registerUser(
-          _emailController.text,
-          _passwordController.text,
-          _nameController.text,
-          _surNameController.text,
-          _phoneController.text,
-          viewModel.selectedValueCountry.toString(),
-          viewModel.selectedValueCity.toString(),
-          _zipCodeController.text,
-          _addressController.text,
-          context
-        );
+            _emailController.text,
+            _passwordController.text,
+            _nameController.text,
+            _surNameController.text,
+            _phoneController.text,
+            viewModel.selectedValueCountry.toString(),
+            viewModel.selectedValueCity.toString(),
+            _zipCodeController.text,
+            _addressController.text,
+            context);
       },
     );
   }
