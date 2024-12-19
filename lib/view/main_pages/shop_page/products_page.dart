@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/main_pages/shop_page/product_details.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/product_details_view_model.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/products_view_model.dart';
-
-import 'package:zeydal_ecom/data/model/product.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key, required this.category});
@@ -34,8 +33,8 @@ class ProductsPage extends StatelessWidget {
             itemCount: viewModel.products.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              crossAxisSpacing: 0,
+              mainAxisSpacing: 0,
               childAspectRatio: 0.65,
             ),
             itemBuilder: (context, index) {
@@ -113,7 +112,8 @@ class ProductsPage extends StatelessWidget {
                 Text(
                   '${product.price.toString()} ₺',
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary, fontSize: 20),
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 20),
                 ),
               ],
             )),

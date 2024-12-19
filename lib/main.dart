@@ -29,8 +29,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.lightGreenAccent,
-            background: Colors.white,
+            brightness: Brightness.light,
+          ).copyWith(
+            surface: Colors.white, // Kartlar ve yüzeyler için renk
           ),
+          scaffoldBackgroundColor: Colors.grey.shade50,
+          // Scaffold'un arka plan rengi
           useMaterial3: true,
         ),
         home: authViewModel.isLoggedIn

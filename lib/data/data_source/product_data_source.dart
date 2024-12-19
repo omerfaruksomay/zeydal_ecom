@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../api_constants/api_constants.dart';
 import '../model/product.dart';
 
@@ -28,7 +30,6 @@ class ProductDataSource {
     }
   }
 
-
   Future<List<Product>> fetchRandomProducts({String? category}) async {
     try {
       // Mevcut fetchProducts metodunu kullanarak tüm ürünleri al
@@ -48,6 +49,4 @@ class ProductDataSource {
       throw Exception('Failed to fetch random products');
     }
   }
-
-
 }

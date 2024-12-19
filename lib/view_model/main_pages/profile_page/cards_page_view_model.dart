@@ -1,12 +1,14 @@
 import 'dart:convert';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
-import 'package:zeydal_ecom/view/main_pages/profile_page/create_card_page.dart';
+import 'package:zeydal_ecom/view/main_pages/profile_page/cards_page/create_card_page.dart';
 import 'package:zeydal_ecom/view_model/main_pages/profile_page/create_card_page_view_model.dart';
+
 import '../../../data/model/bank_card.dart';
 import '../../../view/widgets/custom_snacbar.dart';
 
@@ -33,7 +35,7 @@ class CardsPageViewModel with ChangeNotifier {
       final response = await http.get(url, headers: {
         'Authorization': token, // Gerekliyse header ekleyin
       });
-
+      print(response.body);
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         List<BankCard> loadedCards = [];
@@ -43,6 +45,7 @@ class CardsPageViewModel with ChangeNotifier {
           loadedCards.add(BankCard.fromJson(cardJson));
         }
         _cards = loadedCards;
+        print(loadedCards[0]);
         notifyListeners(); // Dinleyicilere yeni veri geldiğini bildir
       } else {
         throw Exception('Failed to load cards');
