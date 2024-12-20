@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/model/bank_card.dart';
-import 'package:zeydal_ecom/view_model/main_pages/profile_page/cards_page_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/profile_page/cards_page/cards_page_view_model.dart';
 
 class CardsPage extends StatelessWidget {
   const CardsPage({super.key});
@@ -37,7 +37,6 @@ class CardsPage extends StatelessWidget {
               ),
             );
           }
-
 
           return ListView.builder(
             itemCount: viewModel.cards.length,

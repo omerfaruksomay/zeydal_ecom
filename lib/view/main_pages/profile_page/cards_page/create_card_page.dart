@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/view/widgets/custom_app_bar.dart';
 import 'package:zeydal_ecom/view/widgets/custom_textfield.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
-import 'package:zeydal_ecom/view_model/main_pages/profile_page/create_card_page_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/profile_page/cards_page/create_card_page_view_model.dart';
 
 class CreateCardPage extends StatelessWidget {
   CreateCardPage({super.key});

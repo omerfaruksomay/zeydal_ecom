@@ -134,7 +134,7 @@ class RegisterPage extends StatelessWidget {
   Widget _buildCityTextField(context) {
     RegisterViewModel viewModel = Provider.of(context, listen: false);
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 0, bottom: 5, top: 5),
+      padding: const EdgeInsets.only(left: 10, right: 0, bottom: 5, top: 5),
       child: DropdownButtonFormField(
         decoration: InputDecoration(
           labelText: 'Şehir',

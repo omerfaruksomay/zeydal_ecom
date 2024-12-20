@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/model/comment.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/product_details_view_model.dart';
@@ -11,92 +12,207 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      heightFactor: 0.9,
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-          child: SizedBox(
-            height: double.infinity,
-            child: Stack(children: [
-              SingleChildScrollView(
-                child: Column(
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+        child: SizedBox(
+          height: double.infinity,
+          child: Stack(children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Image.asset('assets/images/product.jpg'),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: product.seller['SellerName'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        TextSpan(
+                          text: ' ${product.name}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'Ürün Açıklaması:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        TextSpan(
+                          text: product.definition,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  _buildComments(),
+                  // _buildProductSlider(context),
+                  Divider(),
+                  SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.asset('assets/images/product.jpg'),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: product.seller['SellerName'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' ${product.name}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      '${product.price} ₺',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 24),
                     ),
-                    const Divider(),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Ürün Açıklaması:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          TextSpan(
-                            text: product.definition,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
+                    _buildOrderButton(context),
+                  ],
+                ),
+              ),
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildComments() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Yorumlar",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              TextButton(
+                onPressed: () {
+                  print("Button pressed");
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'Tüm Yorumları gör',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    const Divider(),
-                    _buildProductSlider(context),
-                    const SizedBox(
-                      height: 50,
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
                     ),
                   ],
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        '${product.price} tl',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 24),
-                      ),
-                      _buildOrderButton(context),
-                    ],
-                  ),
-                ),
-              ),
-            ]),
+            ],
           ),
         ),
-      ),
+        _buildCommentsSlider(),
+      ],
+    );
+  }
+
+  Widget _buildCommentsSlider() {
+    return Consumer<ProductDetailsViewModel>(
+      builder: (context, viewModel, child) {
+        return SizedBox(
+          height: 150, // Yorum slider yüksekliği
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal, // Yatay kaydırma
+            itemCount: viewModel.comments.length,
+            itemBuilder: (context, index) {
+              Comment cm = viewModel.comments[index];
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.all(10),
+                width: 300,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200], // Arkaplan rengi
+                  borderRadius: BorderRadius.circular(10), // Köşe yuvarlatma
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildRatingStars(cm.rating),
+                            SizedBox(height: 5),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('Ö*** F*** S**'),
+                            )
+                          ],
+                        ),
+                        Text(cm.formattedCreatedAt)
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      cm.comment, // Kullanıcı adı
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildRatingStars(int rating) {
+    return Row(
+      mainAxisSize: MainAxisSize.min, // Sadece gerekli alanı kaplar
+      children: List.generate(5, (index) {
+        return Icon(
+          index < rating ? Icons.star : Icons.star_border,
+          // Dolu veya boş yıldız
+          color: Colors.amber, // Yıldız rengi
+          size: 20, // Yıldız boyutu
+        );
+      }),
     );
   }
 
@@ -109,7 +225,7 @@ class ProductDetails extends StatelessWidget {
       minWidth: 100,
       minHeight: 40,
       onPressed: () {
-        viewModel.addProductToCart(product.id,context);
+        viewModel.addProductToCart(product.id, context);
       },
     );
   }
@@ -149,8 +265,12 @@ class ProductDetails extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: viewModel.products.map((product) {
-                    return _buildProductSliderItem(context, product.name,
-                        product.seller['SellerName'], product.price.toString(),product.images[0]);
+                    return _buildProductSliderItem(
+                        context,
+                        product.name,
+                        product.seller['SellerName'],
+                        product.price.toString(),
+                        product.images[0]);
                   }).toList(),
                 ),
               ),
@@ -162,7 +282,7 @@ class ProductDetails extends StatelessWidget {
   }
 
   Widget _buildProductSliderItem(
-      BuildContext context, String name, String brand, String price,image) {
+      BuildContext context, String name, String brand, String price, image) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: Column(
@@ -171,7 +291,8 @@ class ProductDetails extends StatelessWidget {
           SizedBox(
             height: 150,
             width: 150,
-            child: Image.asset('assets/images/product.jpg',
+            child: Image.asset(
+              'assets/images/product.jpg',
               fit: BoxFit.fill,
             ),
           ),

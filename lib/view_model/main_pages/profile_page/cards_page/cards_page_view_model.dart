@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
 import 'package:zeydal_ecom/view/main_pages/profile_page/cards_page/create_card_page.dart';
-import 'package:zeydal_ecom/view_model/main_pages/profile_page/create_card_page_view_model.dart';
+import 'package:zeydal_ecom/view_model/main_pages/profile_page/cards_page/create_card_page_view_model.dart';
 
-import '../../../data/model/bank_card.dart';
-import '../../../view/widgets/custom_snacbar.dart';
+import '../../../../data/model/bank_card.dart';
+import '../../../../view/widgets/custom_snacbar.dart';
 
 class CardsPageViewModel with ChangeNotifier {
   final Storage _storage = Storage();

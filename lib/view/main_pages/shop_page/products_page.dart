@@ -71,13 +71,12 @@ class ProductsPage extends StatelessWidget {
           highlightColor: Theme.of(context).colorScheme.secondaryContainer,
           splashColor: Theme.of(context).colorScheme.secondaryContainer,
           onTap: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              context: context,
-              builder: (context) => ChangeNotifierProvider(
-                create: (context) => ProductDetailsViewModel(),
-                child: ProductDetails(
-                  product: product,
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChangeNotifierProvider(
+                  create: (context) => ProductDetailsViewModel(),
+                  child: ProductDetails(product: product),
                 ),
               ),
             );

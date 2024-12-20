@@ -15,7 +15,7 @@ import '../../../view/auth/login_page.dart';
 import '../../../view/main_pages/profile_page/cards_page/cards_page.dart';
 import '../../../view/widgets/custom_snacbar.dart';
 import '../../auth/login_view_model.dart';
-import 'cards_page_view_model.dart';
+import 'cards_page/cards_page_view_model.dart';
 
 class ProfilePageViewModel with ChangeNotifier {
   final _storage = Storage();
