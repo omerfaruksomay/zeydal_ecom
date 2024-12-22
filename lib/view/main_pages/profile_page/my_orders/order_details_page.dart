@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/model/cart.dart';
+import '../../../../data/model/cart.dart';
 
 class OrderDetailsPage extends StatelessWidget {
   const OrderDetailsPage(
@@ -79,7 +79,7 @@ class OrderDetailsPage extends StatelessWidget {
                 children: [
                   SizedBox(height: 5),
                   Text(
-                    product['seller']['SellerName'],
+                    "Zeydal",
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.bold),
                   ),

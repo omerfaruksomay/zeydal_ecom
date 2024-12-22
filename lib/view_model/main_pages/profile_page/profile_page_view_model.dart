@@ -4,7 +4,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
-import 'package:zeydal_ecom/view/main_pages/profile_page/my_orders_page.dart';
+import 'package:zeydal_ecom/view/main_pages/profile_page/my_orders/my_orders_page.dart';
 import 'package:zeydal_ecom/view/main_pages/profile_page/settings_page.dart';
 import 'package:zeydal_ecom/view/main_pages/profile_page/user_details_page.dart';
 import 'package:zeydal_ecom/view_model/main_pages/profile_page/my_orders_page_view_model.dart';

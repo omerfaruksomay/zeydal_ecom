@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/local_storage/storage.dart';
 import 'package:zeydal_ecom/data/model/comment.dart';
+import 'package:zeydal_ecom/view/main_pages/shop_page/comments/all_comments_page.dart';
+import 'package:zeydal_ecom/view_model/main_pages/shop_page/comments/all_comments_page_view_model.dart';
 
 import '../../../data/model/product.dart';
 import '../../../data/repository/product_repository.dart';
@@ -141,5 +144,17 @@ class ProductDetailsViewModel with ChangeNotifier {
     _comments.add(cm4);
     _comments.add(cm5);
     notifyListeners();
+  }
+
+  void goAllCommentsPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) => AllCommentsPageViewModel(),
+          child: AllCommentsPage(),
+        ),
+      ),
+    );
   }
 }

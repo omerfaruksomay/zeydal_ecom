@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:zeydal_ecom/view/main_pages/profile_page/order_details_page.dart';
-import 'dart:convert';
+import 'package:zeydal_ecom/view/main_pages/profile_page/my_orders/order_details_page.dart';
 
 import '../../../data/api_constants/api_constants.dart';
 import '../../../data/local_storage/storage.dart';

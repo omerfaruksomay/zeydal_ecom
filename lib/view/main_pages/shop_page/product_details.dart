@@ -65,7 +65,7 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ),
                   const Divider(),
-                  _buildComments(),
+                  _buildComments(context),
                   // _buildProductSlider(context),
                   Divider(),
                   SizedBox(
@@ -100,7 +100,7 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildComments() {
+  Widget _buildComments(BuildContext context) {
     return Column(
       children: [
         Padding(
@@ -112,28 +112,33 @@ class ProductDetails extends StatelessWidget {
                 "Yorumlar",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              TextButton(
-                onPressed: () {
-                  print("Button pressed");
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      'Tüm Yorumları gör',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
+              _buildViewAllCommentsButton(context),
             ],
           ),
         ),
         _buildCommentsSlider(),
       ],
+    );
+  }
+
+  TextButton _buildViewAllCommentsButton(BuildContext context) {
+    ProductDetailsViewModel viewModel = Provider.of(context, listen: false);
+    return TextButton(
+      onPressed: () {
+        viewModel.goAllCommentsPage(context);
+      },
+      child: Row(
+        children: [
+          Text(
+            'Tüm Yorumları gör',
+            style: TextStyle(fontSize: 16),
+          ),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 16,
+          ),
+        ],
+      ),
     );
   }
 
