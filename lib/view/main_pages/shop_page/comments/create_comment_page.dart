@@ -6,9 +6,11 @@ import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/comments/create_comment_page_view_model.dart';
 
 class CreateCommentPage extends StatelessWidget {
-  CreateCommentPage({super.key});
+  CreateCommentPage({super.key, required this.productId});
 
   final TextEditingController _messageController = TextEditingController();
+
+  String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +19,28 @@ class CreateCommentPage extends StatelessWidget {
         title: Text('Yorum yap'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text(
-              "Ürünü aşağıdan puanlayabilir ve yorum yazabilirsiiniz.",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              Text(
+                "Ürünü aşağıdan puanlayabilir ve yorum yazabilirsiiniz.",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            Divider(),
-            _buildRatingBar(context),
-            SizedBox(height: 8),
-            _buildCommentTextField(),
-            SizedBox(height: 8),
-            _buildCreateCommentButton(context)
-          ],
+              Divider(),
+              _buildRatingBar(context),
+              SizedBox(height: 8),
+              _buildCommentTextField(),
+              SizedBox(height: 8),
+              _buildCreateCommentButton(context)
+            ],
+          ),
         ),
       ),
     );
@@ -73,7 +78,7 @@ class CreateCommentPage extends StatelessWidget {
       minHeight: 50,
       onPressed: () {
         viewModel.createComment(
-            context, _messageController.text, viewModel.raiting);
+            context, _messageController.text, viewModel.raiting, productId);
       },
     );
   }

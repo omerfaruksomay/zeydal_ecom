@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/model/comment.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
@@ -22,7 +23,7 @@ class ProductDetails extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset('assets/images/product.jpg'),
+                  Image.network("${ApiConstants.url}/${product.images[0]}"),
                   Text.rich(
                     TextSpan(
                       children: [
@@ -121,11 +122,11 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
-  TextButton _buildViewAllCommentsButton(BuildContext context) {
+  Widget _buildViewAllCommentsButton(BuildContext context) {
     ProductDetailsViewModel viewModel = Provider.of(context, listen: false);
     return TextButton(
       onPressed: () {
-        viewModel.goAllCommentsPage(context);
+        viewModel.goAllCommentsPage(context, product.id);
       },
       child: Row(
         children: [
@@ -145,6 +146,41 @@ class ProductDetails extends StatelessWidget {
   Widget _buildCommentsSlider() {
     return Consumer<ProductDetailsViewModel>(
       builder: (context, viewModel, child) {
+        /*if (viewModel.comments.isEmpty) {
+          return SizedBox(
+            height: 150,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.all(10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey[200], // Arkaplan rengi
+                borderRadius: BorderRadius.circular(10), // Köşe yuvarlatma
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 5,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Bu üründe henüz yorum bulunmamaktadır."),
+                    TextButton(
+                        onPressed: () {
+                          viewModel.goCreateCommentsPage(context, product.id);
+                        },
+                        child: Text("Yorum yap"))
+                  ],
+                ),
+              ),
+            ),
+          );
+        }*/
+
         return SizedBox(
           height: 150, // Yorum slider yüksekliği
           child: ListView.builder(
@@ -181,7 +217,7 @@ class ProductDetails extends StatelessWidget {
                             SizedBox(height: 5),
                             Padding(
                               padding: const EdgeInsets.only(left: 5),
-                              child: Text('Ö*** F*** S**'),
+                              child: Text(cm.userId['name']),
                             )
                           ],
                         ),

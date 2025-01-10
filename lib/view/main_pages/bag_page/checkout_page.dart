@@ -225,8 +225,8 @@ class CheckoutPage extends StatelessWidget {
             label: "Sepeti Onayla",
             labelColor: Colors.white,
             buttonColor: Theme.of(context).colorScheme.primary,
-            minWidth: 225,
-            minHeight: 50,
+            minWidth: 100,
+            minHeight: 40,
             onPressed: () {
               if (viewModel.useSavedCards) {
                 viewModel.processPaymentWithRegisteredCard(

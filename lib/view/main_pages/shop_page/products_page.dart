@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/model/product.dart';
 import 'package:zeydal_ecom/view/main_pages/shop_page/product_details.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/product_details_view_model.dart';
@@ -75,7 +76,7 @@ class ProductsPage extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider(
-                  create: (context) => ProductDetailsViewModel(),
+                  create: (context) => ProductDetailsViewModel(product.id),
                   child: ProductDetails(product: product),
                 ),
               ),
@@ -87,12 +88,16 @@ class ProductsPage extends StatelessWidget {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/images/product.jpg'),
+                Image.network(
+                  '${ApiConstants.url}/${product.images[0]}',
+                  width: 150,
+                  height: 120,
+                ),
                 Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: product.seller['SellerName'],
+                        text: product.seller['legalCompanyTitle'],
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,

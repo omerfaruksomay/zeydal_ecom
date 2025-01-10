@@ -1,76 +1,60 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:zeydal_ecom/data/model/comment.dart';
 import 'package:zeydal_ecom/view/main_pages/shop_page/comments/create_comment_page.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/comments/create_comment_page_view_model.dart';
 
+import '../../../../data/api_constants/api_constants.dart';
+import '../../../../data/local_storage/storage.dart';
+
 class AllCommentsPageViewModel with ChangeNotifier {
-  final List<Comment> _comments = [];
+  final _storage = Storage();
+  List<Comment> _comments = [];
 
   List<Comment> get comments => _comments;
 
-  AllCommentsPageViewModel() {
+  AllCommentsPageViewModel(String productId) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _getComments();
+      _getComments(productId);
     });
   }
 
-  void _getComments() {
-    Comment cm1 = Comment(
-      id: "1",
-      productId: "1",
-      rating: 2,
-      comment: "Deneme",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-    Comment cm2 = Comment(
-      id: "1",
-      productId: "1",
-      rating: 2,
-      comment: "Deneme 123 ",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-    Comment cm3 = Comment(
-      id: "1",
-      productId: "1",
-      rating: 4,
-      comment: "Deneme 3123 12",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-    Comment cm4 = Comment(
-      id: "1",
-      productId: "1",
-      rating: 1,
-      comment: "Deneme 1312 3123 1",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-    Comment cm5 = Comment(
-      id: "1",
-      productId: "1",
-      rating: 5,
-      comment: "Deneme",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-    _comments.clear();
-    _comments.add(cm1);
-    _comments.add(cm2);
-    _comments.add(cm3);
-    _comments.add(cm4);
-    _comments.add(cm5);
-    notifyListeners();
+  Future<void> _getComments(String productId) async {
+    final url =
+        Uri.parse("${ApiConstants.getCommentsByProduct}?productId=$productId");
+    final String token = await _storage.readSecureData('user_token');
+    try {
+      final response = await http.get(url, headers: {
+        'Authorization': token, // Gerekliyse header ekleyin
+      });
+      print(response.body);
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        List<Comment> loadedComments = [];
+        for (var commentJson in responseData) {
+          loadedComments.add(Comment.fromJson(commentJson));
+        }
+        _comments = loadedComments;
+        notifyListeners();
+      } else {
+        throw Exception('Failed to load cards');
+      }
+    } catch (err) {
+      throw Exception('Error fetching cards: $err');
+    }
   }
 
-  void goAddCommentPage(BuildContext context) {
+  void goAddCommentPage(BuildContext context, String productId) {
     showModalBottomSheet(
       context: context,
       builder: (context) => ChangeNotifierProvider(
         create: (context) => CreateCommentPageViewModel(),
-        child: CreateCommentPage(),
+        child: CreateCommentPage(
+          productId: productId,
+        ),
       ),
     );
   }

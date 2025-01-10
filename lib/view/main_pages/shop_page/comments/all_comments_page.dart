@@ -4,7 +4,9 @@ import 'package:zeydal_ecom/data/model/comment.dart';
 import 'package:zeydal_ecom/view_model/main_pages/shop_page/comments/all_comments_page_view_model.dart';
 
 class AllCommentsPage extends StatelessWidget {
-  const AllCommentsPage({super.key});
+  AllCommentsPage({super.key, required this.productId});
+
+  String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class AllCommentsPage extends StatelessWidget {
     AllCommentsPageViewModel viewModel = Provider.of(context, listen: false);
     return FloatingActionButton(
       onPressed: () {
-        viewModel.goAddCommentPage(context);
+        viewModel.goAddCommentPage(context, productId);
       },
       child: Icon(Icons.add_comment_rounded),
     );
@@ -70,7 +72,7 @@ class AllCommentsPage extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 5),
-                            child: Text('Ö**** F**** S***'),
+                            child: Text(cm.userId['name']),
                           ),
                         ],
                       ),

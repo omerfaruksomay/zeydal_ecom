@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/view/widgets/cutom_button.dart';
 import 'package:zeydal_ecom/view_model/main_pages/bag_page/bag_page_view_model.dart';
 
@@ -96,8 +97,9 @@ class BagPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Image.asset(
-                'assets/images/product.jpg', // Resmi sunucudan alıyorsan
+              child: Image.network(
+                "${ApiConstants.url}/${product['productId']['images'][0]}",
+                // Resmi sunucudan alıyorsan
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
@@ -112,18 +114,9 @@ class BagPage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: product['productId']['name'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
+                        Text(
+                          product['productId']['name'],
+                          textAlign: TextAlign.start,
                         ),
                         Row(
                           children: [

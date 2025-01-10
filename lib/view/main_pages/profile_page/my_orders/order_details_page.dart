@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 
 import '../../../../data/model/cart.dart';
 
@@ -67,9 +68,9 @@ class OrderDetailsPage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                'assets/images/product.jpg',
-                scale: 8,
+              Image.network(
+                ApiConstants.url + "/" + product['productId']['images'][0],
+                width: 120,
               ),
               const SizedBox(
                 width: 10,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/data/model/cart.dart';
 import 'package:zeydal_ecom/view_model/main_pages/profile_page/my_orders_page_view_model.dart';
 
@@ -124,7 +125,8 @@ class MyOrdersPage extends StatelessWidget {
                 Container(
                   height: 75,
                   width: 75,
-                  child: Image.asset('assets/images/product.jpg'),
+                  child: Image.network('${ApiConstants.url}/' +
+                      product['productId']['images'][0]),
                 ),
               ],
             ),

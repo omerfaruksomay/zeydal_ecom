@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:zeydal_ecom/data/api_constants/api_constants.dart';
 import 'package:zeydal_ecom/view_model/main_pages/home_page_view_model.dart';
 
 class HomePage extends StatelessWidget {
@@ -110,8 +111,8 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 150,
               width: 150,
-              child: Image.asset(
-                'assets/images/product.jpg',
+              child: Image.network(
+                "${ApiConstants.url}/$image",
                 fit: BoxFit.fill,
               ),
             ),

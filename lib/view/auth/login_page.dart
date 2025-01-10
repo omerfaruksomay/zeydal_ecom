@@ -62,7 +62,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildEmailTextField() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: CustomTextField(
         keyboardType: TextInputType.emailAddress,
         controller: _emailController,
@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildPasswordTextField() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: CustomTextField(
         isObscure: true,
         controller: _passwordController,
@@ -84,28 +84,34 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildLoginButton(context) {
     LoginViewModel viewModel = Provider.of(context, listen: false);
-    return CustomButton(
-      label: "Giriş Yap",
-      labelColor: Colors.white,
-      buttonColor: Theme.of(context).colorScheme.primary,
-      minWidth: 350,
-      minHeight: 50,
-      fontSize: 20,
-      onPressed: () => viewModel.login(
-          _emailController.text, _passwordController.text, context),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: CustomButton(
+        label: "Giriş Yap",
+        labelColor: Colors.white,
+        buttonColor: Theme.of(context).colorScheme.primary,
+        minWidth: double.infinity,
+        minHeight: 50,
+        fontSize: 20,
+        onPressed: () => viewModel.login(
+            _emailController.text, _passwordController.text, context),
+      ),
     );
   }
 
   Widget _buildRegisterButton(context) {
     LoginViewModel viewModel = Provider.of(context, listen: false);
-    return CustomButton(
-      label: "Kayıt Ol",
-      labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
-      buttonColor: Theme.of(context).colorScheme.primaryContainer,
-      minWidth: 350,
-      minHeight: 50,
-      fontSize: 20,
-      onPressed: () => viewModel.register(context),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: CustomButton(
+        label: "Kayıt Ol",
+        labelColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        buttonColor: Theme.of(context).colorScheme.primaryContainer,
+        minWidth: double.infinity,
+        minHeight: 50,
+        fontSize: 20,
+        onPressed: () => viewModel.register(context),
+      ),
     );
   }
 

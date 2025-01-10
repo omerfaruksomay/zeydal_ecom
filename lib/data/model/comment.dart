@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 class Comment {
   String id;
   String productId;
+  Map<String, dynamic> userId;
   int rating;
   String comment;
   DateTime createdAt;
@@ -11,6 +12,7 @@ class Comment {
   Comment({
     required this.id,
     required this.productId,
+    required this.userId,
     required this.rating,
     required this.comment,
     required this.createdAt,
@@ -21,6 +23,7 @@ class Comment {
     return Comment(
       id: json['_id'] ?? '',
       productId: json['productId'] ?? '',
+      userId: Map<String, dynamic>.from(json['userId']),
       // userId artık Map<String, dynamic>
       rating: json['rating'] ?? 0,
       comment: json['comment'] ?? '',
@@ -29,17 +32,6 @@ class Comment {
       updatedAt:
           DateTime.parse(json['updatedAt'] ?? DateTime.now().toIso8601String()),
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'productId': productId,
-      'rating': rating,
-      'comment': comment,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-    };
   }
 
   String get formattedCreatedAt {
